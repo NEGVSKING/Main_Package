@@ -4,18 +4,38 @@
 import PackageDescription
 
 let package = Package(
-    name: "Main_Package",
+    name: "E-ROK-Package",
+    platforms: [.iOS(.v17)], // Supporte iOS 17, 18
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Main_Package",
-            targets: ["Main_Package"]),
+            name: "EROKUI",
+            targets: ["EROKUI"]
+        ),
+        .library(
+            name: "EROKCore",
+            targets: ["EROKCore"]
+        ),
+        .library(
+            name: "EROKViews",
+            targets: ["EROKViews"]
+        )
     ],
+    dependencies: [],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Main_Package"),
-
+            name: "EROKUI",
+            dependencies: [],
+            path: "Sources/EROKUI"
+        ),
+        .target(
+            name: "EROKCore",
+            dependencies: [],
+            path: "Sources/EROKCore"
+        ),
+        .target(
+            name: "EROKViews",
+            dependencies: ["EROKUI", "EROKCore"],
+            path: "Sources/EROKViews"
+        )
     ]
 )
