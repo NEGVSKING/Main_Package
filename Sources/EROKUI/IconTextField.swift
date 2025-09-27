@@ -1,3 +1,11 @@
+//
+//  IconTextField.swift
+//  E-ROK-Package
+//
+//  Created by Fabien Koré on 27/09/2025.
+//
+
+
 // Sources/EROKUI/IconTextField.swift
 // E-ROK-Package
 //
@@ -36,7 +44,7 @@ public struct IconTextField: View {
         value: Binding<String>,
         isPassword: Bool = false,
         textColor: Color = .gray,
-        backgroundColor: Color = .ultraThinMaterial
+        backgroundColor: Color = .white
     ) {
         self.hint = hint
         self.symbol = symbol
@@ -90,14 +98,14 @@ public struct IconTextField: View {
 #Preview {
     @Previewable @State var text = ""
     @Previewable @State var password = ""
-    return VStack(spacing: 20) {
+    VStack(spacing: 20) {
         IconTextField(
             hint: "Email",
             symbol: "envelope",
             value: $text,
             isPassword: false,
             textColor: .gray,
-            backgroundColor: .ultraThinMaterial
+            backgroundColor: .gray.opacity(0.2)
         )
         IconTextField(
             hint: "Mot de passe",
@@ -105,7 +113,7 @@ public struct IconTextField: View {
             value: $password,
             isPassword: true,
             textColor: .black,
-            backgroundColor: .white.opacity(0.8)
+            backgroundColor: .black.opacity(0.1)
         )
         IconTextField(
             hint: "Pseudo",

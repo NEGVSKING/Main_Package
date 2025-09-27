@@ -5,10 +5,9 @@
 
 import SwiftUI
 
-/// A customizable button with loading state for asynchronous tasks, designed for E-ROK iOS applications.
+/// A button with a loading state for asynchronous tasks, designed for E-ROK iOS applications.
 public struct TaskButton: View {
     /// The title displayed on the button
-
     public let title: String
     /// The asynchronous task executed when the button is tapped
     public let task: () async -> Void
@@ -18,10 +17,6 @@ public struct TaskButton: View {
     public let textColor: Color
     /// Background color for the button
     public let backgroundColor: Color
-    /// Minimum width of the button
-    public let minWidth: CGFloat
-    /// Corner radius for the button's capsule shape
-    public let cornerRadius: CGFloat
 
     @State private var isLoading: Bool = false
 
@@ -30,26 +25,20 @@ public struct TaskButton: View {
     ///   - title: The text displayed on the button
     ///   - task: The asynchronous action to perform when tapped
     ///   - onStatusChange: Callback for loading state changes (default: no-op)
-    ///   - textColor: Color of the button's text (default: .white)
+    ///   - textColor: Color of the button's text (default: .primary)
     ///   - backgroundColor: Background color of the button (default: .blue)
-    ///   - minWidth: Minimum width of the button (default: 168)
-    ///   - cornerRadius: Corner radius for the capsule shape (default: 24)
     public init(
         title: String,
         task: @escaping () async -> Void,
         onStatusChange: @escaping (Bool) -> Void = { _ in },
         textColor: Color = .white,
-        backgroundColor: Color = .blue,
-        minWidth: CGFloat = 168,
-        cornerRadius: CGFloat = 24
+        backgroundColor: Color = .black
     ) {
         self.title = title
         self.task = task
         self.onStatusChange = onStatusChange
         self.textColor = textColor
         self.backgroundColor = backgroundColor
-        self.minWidth = minWidth
-        self.cornerRadius = cornerRadius
     }
 
     public var body: some View {
@@ -61,26 +50,23 @@ public struct TaskButton: View {
                 isLoading = false
             }
         } label: {
-            ZStack {
-                Text(title)
-                    .font(.callout)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(textColor)
-                    .opacity(isLoading ? 0 : 1)
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .foregroundStyle(textColor)
-                    .opacity(isLoading ? 1 : 0)
-            }
-            .frame(maxWidth: .infinity, minHeight: 48)
-            .padding(.vertical, 8)
-            .background(backgroundColor)
-            .clipShape(Capsule())
+            Text(title)
+                .font(.callout)
+                .fontWeight(.semibold)
+                .foregroundStyle(textColor)
+                .opacity(isLoading ? 0 : 1)
+                .overlay {
+                    ProgressView()
+                        .opacity(isLoading ? 1 : 0)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
         }
-        .disabled(isLoading)
+        .tint(backgroundColor)
         .buttonStyle(.borderedProminent)
         .buttonBorderShape(.capsule)
         .animation(.easeInOut(duration: 0.25), value: isLoading)
+        .disabled(isLoading)
         .onChange(of: isLoading) { _, newValue in
             withAnimation(.easeInOut(duration: 0.25)) {
                 onStatusChange(newValue)
@@ -96,25 +82,23 @@ public struct TaskButton: View {
             task: {
                 try? await Task.sleep(nanoseconds: 2_000_000_000) // Simulate 2s task
             },
-            textColor: .white داشتن
-            backgroundColor: .blue,
-            minWidth: 168,
-            cornerRadius: 24
-        ) { isLoading in
-            print("Loading state changed: \(isLoading)")
-        }
+            onStatusChange: { isLoading in
+                print("Loading state changed: \(isLoading)")
+            },
+            textColor: .white,
+            backgroundColor: .blue
+        )
         TaskButton(
             title: "Soumettre Achat",
             task: {
                 try? await Task.sleep(nanoseconds: 1_000_000_000) // Simulate 1s task
             },
+            onStatusChange: { isLoading in
+                print("Loading state changed: \(isLoading)")
+            },
             textColor: .black,
-            backgroundColor: .yellow,
-            minWidth: 200,
-            cornerRadius: 16
-        ) { isLoading in
-            print("Loading state changed: \(isLoading)")
-        }
+            backgroundColor: .yellow
+        )
     }
     .padding()
 }

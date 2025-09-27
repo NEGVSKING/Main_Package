@@ -1,11 +1,3 @@
-//
-//  Validation.swift
-//  E-ROK-Package
-//
-//  Created by Fabien Koré on 03/08/2025.
-//
-
-
 // Sources/EROKCore/Validation.swift
 // E-ROK-Package
 //
@@ -13,6 +5,7 @@
 
 import Foundation
 
+/// A structure providing validation methods for user input data in E-ROK iOS applications.
 public struct Validation {
     // Valider un email
     public static func isValidEmail(_ email: String) -> Bool {
@@ -109,5 +102,31 @@ public struct Validation {
         let hasHadBirthdayThisYear = (birthMonth < currentMonth) || (birthMonth == currentMonth && birthDay <= currentDay)
         let actualAge = hasHadBirthdayThisYear ? age : age - 1
         return actualAge >= 15
+    }
+    
+    // Nouvelle validation : Vérifier que le mot de passe et la confirmation concordent
+    public static func isPasswordMatching(_ password: String, _ confirmPassword: String) -> Bool {
+        return password == confirmPassword
+    }
+    
+    // Nouvelle validation : Vérifier une ville (lettres, accents, espaces, -, pas de chiffres)
+    public static func isValidCity(_ city: String) -> Bool {
+        let cityRegex = "^[a-zA-ZàáâãäåçèéêëìíîïòóôõöùúûüýÿÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝŸ -]+$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", cityRegex)
+        return predicate.evaluate(with: city)
+    }
+    
+    // Nouvelle validation : Vérifier un code postal (5 chiffres pour un format simplifié)
+    public static func isValidPostalCode(_ postalCode: String) -> Bool {
+        let postalCodeRegex = "^[0-9]{5}$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", postalCodeRegex)
+        return predicate.evaluate(with: postalCode)
+    }
+    
+    // Nouvelle validation : Vérifier un numéro de rue (entier positif ou alphanumérique simple, ex. "12", "12A")
+    public static func isValidStreetNumber(_ streetNumber: String) -> Bool {
+        let streetNumberRegex = "^[0-9]+[A-Za-z]?$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", streetNumberRegex)
+        return predicate.evaluate(with: streetNumber)
     }
 }

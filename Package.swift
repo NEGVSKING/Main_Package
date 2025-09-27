@@ -5,20 +5,11 @@ import PackageDescription
 
 let package = Package(
     name: "E-ROK-Package",
-    platforms: [.iOS(.v17)], // Supporte iOS 17, 18
+    platforms: [.iOS(.v17)],
     products: [
-        .library(
-            name: "EROKUI",
-            targets: ["EROKUI"]
-        ),
-        .library(
-            name: "EROKCore",
-            targets: ["EROKCore"]
-        ),
-        .library(
-            name: "EROKViews",
-            targets: ["EROKViews"]
-        )
+        .library(name: "EROKUI", targets: ["EROKUI"]),
+        .library(name: "EROKCore", targets: ["EROKCore"]),
+        .library(name: "EROKViews", targets: ["EROKViews"])
     ],
     dependencies: [],
     targets: [
