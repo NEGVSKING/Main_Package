@@ -1,3 +1,11 @@
+//
+//  NightTheme.swift
+//  E-ROK-Package
+//
+//  Created by Fabien Koré on 27/09/2025.
+//
+
+
 // Sources/SHIFT/NightTheme.swift
 // E-ROK-Package
 //
@@ -6,7 +14,6 @@
 import Foundation
 import EROKUI
 import EROKCore
-import EROKViews
 
 public enum NightTheme: String, Codable, CaseIterable, Identifiable {
     case eighties = "80s"

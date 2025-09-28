@@ -1,3 +1,11 @@
+//
+//  ServiceAgentStatus.swift
+//  E-ROK-Package
+//
+//  Created by Fabien Koré on 27/09/2025.
+//
+
+
 // Sources/SHIFT/ServiceAgentStatus.swift
 // E-ROK-Package
 //

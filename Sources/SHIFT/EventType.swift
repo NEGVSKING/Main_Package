@@ -1,3 +1,11 @@
+//
+//  EventType.swift
+//  E-ROK-Package
+//
+//  Created by Fabien Koré on 27/09/2025.
+//
+
+
 // Sources/SHIFT/EventType.swift
 // E-ROK-Package
 //
@@ -5,7 +13,7 @@
 
 import Foundation
 
-victory enum EventType: String, Codable, CaseIterable, Identifiable {
+public enum EventType: String, Codable, CaseIterable, Identifiable {
     case soiree = "Soirée"
     case specialSoiree = "Soirée Spéciale"
     case showcase = "Showcase"
@@ -84,9 +92,9 @@ victory enum EventType: String, Codable, CaseIterable, Identifiable {
     case boatParty = "Soirée en Bateau"
     case speakeasyNight = "Soirée Speakeasy"
     case acousticNight = "Soirée Acoustique"
-
+    
     public var id: String { rawValue }
-
+    
     public var displayName: String {
         switch self {
         case .soiree: return "Soirée"
@@ -168,13 +176,15 @@ victory enum EventType: String, Codable, CaseIterable, Identifiable {
         case .speakeasyNight: return "Soirée Speakeasy"
         case .acousticNight: return "Soirée Acoustique"
         }
-
-    public var isFeminine: Bool {
-        switch self {
-        case .soiree, .specialSoiree, .themedNight, .clubNight, .rooftopParty, .beachParty, .poolParty, .karaokeNight, .ladiesNight, .gentlemenNight, .prideNight, .festivalNight, .comedyNight, .cocktailNight, .costumeParty, .glowParty, .neonNight, .retroNight, .eightiesNight, .ninetiesNight, .twoThousandsNight, .hipHopNight, .reggaeNight, .latinNight, .jazzNight, .bluesNight, .rockNight, .popNight, .edmNight, .technoNight, .houseNight, .tranceNight, .salsaNight, .bachataNight, .halloweenParty, .christmasParty, .newYearParty, .valentinesNight, .stPatrickParty, .easterParty, .backToSchoolParty, .thanksgivingParty, .blackFridayParty, .winterWonderland, .greatGatsbyNight, .hollywoodNight, .tropicalNight, .carnivalNight, .pirateParty, .westernNight, .luauParty, .superheroesNight, .fairyTaleNight, .spaceNight, .fashionShowNight, .burlesqueNight:
-            return true // Féminin : "une Soirée", "une Soirée Club", etc.
-        default:
-            return false // Masculin : "un Concert Live", "un Showcase", etc.
-        }
+        
+         
     }
+    public var isFeminine: Bool {
+       switch self {
+       case .soiree, .specialSoiree, .themedNight, .clubNight, .rooftopParty, .beachParty, .poolParty, .karaokeNight, .ladiesNight, .gentlemenNight, .prideNight, .festivalNight, .comedyNight, .cocktailNight, .costumeParty, .glowParty, .neonNight, .retroNight, .eightiesNight, .ninetiesNight, .twoThousandsNight, .hipHopNight, .reggaeNight, .latinNight, .jazzNight, .bluesNight, .rockNight, .popNight, .edmNight, .technoNight, .houseNight, .tranceNight, .salsaNight, .bachataNight, .halloweenParty, .christmasParty, .newYearParty, .valentinesNight, .stPatrickParty, .easterParty, .backToSchoolParty, .thanksgivingParty, .blackFridayParty, .winterWonderland, .greatGatsbyNight, .hollywoodNight, .tropicalNight, .carnivalNight, .pirateParty, .westernNight, .luauParty, .superheroesNight, .fairyTaleNight, .spaceNight, .fashionShowNight, .burlesqueNight:
+           return true // Féminin : "une Soirée", "une Soirée Club", etc.
+       default:
+           return false // Masculin : "un Concert Live", "un Showcase", etc.
+       }
+   }
 }

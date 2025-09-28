@@ -83,9 +83,9 @@ public enum EstablishmentType: String, Codable, CaseIterable, Identifiable {
     case urbanLounge = "Lounge urbain"
     case rooftopBrewery = "Brasserie sur le toit"
     case boatVenue = "Lieu sur bateau"
-
+    
     public var id: String { rawValue }
-
+    
     public var displayName: String {
         switch self {
         case .bar: return "Bar"
@@ -166,7 +166,9 @@ public enum EstablishmentType: String, Codable, CaseIterable, Identifiable {
         case .rooftopBrewery: return "Brasserie sur le toit"
         case .boatVenue: return "Lieu sur bateau"
         }
-
+        
+       
+    }
     public var isFeminine: Bool {
         switch self {
         case .nightClub, .receptionHall, .liveMusicVenue, .concertHall, .gameRoom, .poolHall, .rooftopTerrace, .artGallery, .rooftopNightClub:

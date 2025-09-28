@@ -1,18 +1,10 @@
-//
-//  AddressField.swift
-//  MyMeca
-//
-//  Created by Fabien Koré on 27/09/2025.
-//
-
-
 // Sources/EROKViews/AddressField.swift
 // E-ROK-Package
 //
 // Created by Fabien Koré on 04/08/2024.
 
 import SwiftUI
-import MapKit
+@preconcurrency import MapKit
 
 public struct AddressField: View {
     @Binding var searchText: String
@@ -20,6 +12,16 @@ public struct AddressField: View {
     @State private var city: String = ""
     @State private var subLocality: String = ""
     @State private var errorMessage: String?
+    
+    // Paramètres personnalisables
+    let textColor: Color
+    let borderColor: Color
+    
+    public init(searchText: Binding<String>, textColor: Color = .primary, borderColor: Color = .blue) {
+        self._searchText = searchText
+        self.textColor = textColor
+        self.borderColor = borderColor
+    }
 
     public var body: some View {
         VStack(spacing: 8) {
@@ -31,6 +33,7 @@ public struct AddressField: View {
             } else if !city.isEmpty {
                 Text("\(city)\(subLocality.isEmpty ? "" : ", \(subLocality)"), \(country)")
                     .font(.subheadline)
+                    .foregroundStyle(textColor) // Applique la couleur du texte
                     .padding(.bottom, 4)
             }
             
@@ -39,7 +42,7 @@ public struct AddressField: View {
                     .stroke(lineWidth: 2)
                     .padding(.horizontal, 5)
                     .opacity(0.8)
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(borderColor) // Applique la couleur du contour
                     .frame(maxWidth: .infinity)
                     .frame(height: 45)
                 
@@ -103,5 +106,5 @@ public struct AddressField: View {
 }
 
 #Preview {
-    AddressField(searchText: .constant("13003"))
+    AddressField(searchText: .constant("13003"), textColor: .black, borderColor: .black)
 }
