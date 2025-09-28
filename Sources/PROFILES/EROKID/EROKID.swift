@@ -6,11 +6,6 @@
 //
 
 
-// Sources/Profiles/EROKID/EROKID.swift
-// E-ROK-Package
-//
-// Created by Fabien Koré on 06/09/2025.
-
 import Foundation
 import EROKCore // Pour Address et Country
 

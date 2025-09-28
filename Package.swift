@@ -1,6 +1,7 @@
 // swift-tools-version: 6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
+// swift-tools-version: 6.1
 import PackageDescription
 
 let package = Package(
@@ -11,14 +12,16 @@ let package = Package(
         .library(name: "EROKCore", targets: ["EROKCore"]),
         .library(name: "EROKViews", targets: ["EROKViews"]),
         .library(name: "SHIFT", targets: ["SHIFT"]),
-        .library(name: "MYMECA", targets: ["MYMECA"])
+        .library(name: "MYMECA", targets: ["MYMECA"]),
+        .library(name: "PROFILES", targets: ["PROFILES"])
     ],
     dependencies: [],
     targets: [
         .target(name: "EROKUI", dependencies: [], path: "Sources/EROKUI"),
-        .target(name: "EROKCore", dependencies: [], path: "Sources/EROKCore"),
+        .target(name: "EROKCore", dependencies: ["MYMECA"], path: "Sources/EROKCore"), // Dépendance ajoutée si Address utilise PlateCountry
         .target(name: "EROKViews", dependencies: ["EROKUI", "EROKCore"], path: "Sources/EROKViews"),
         .target(name: "SHIFT", dependencies: ["EROKUI", "EROKCore", "EROKViews"], path: "Sources/SHIFT"),
-        .target(name: "MYMECA", dependencies: ["EROKUI", "EROKCore", "EROKViews"], path: "Sources/MYMECA")
+        .target(name: "MYMECA", dependencies: [], path: "Sources/MYMECA"),
+        .target(name: "PROFILES", dependencies: ["EROKCore"], path: "Sources/PROFILES")
     ]
 )
