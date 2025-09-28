@@ -17,11 +17,38 @@ let package = Package(
     ],
     dependencies: [],
     targets: [
-        .target(name: "EROKUI", dependencies: [], path: "Sources/EROKUI"),
-        .target(name: "EROKCore", dependencies: ["MYMECA"], path: "Sources/EROKCore"), // Dépendance ajoutée si Address utilise PlateCountry
-        .target(name: "EROKViews", dependencies: ["EROKUI", "EROKCore"], path: "Sources/EROKViews"),
-        .target(name: "SHIFT", dependencies: ["EROKUI", "EROKCore", "EROKViews"], path: "Sources/SHIFT"),
-        .target(name: "MYMECA", dependencies: [], path: "Sources/MYMECA"),
-        .target(name: "PROFILES", dependencies: ["EROKCore"], path: "Sources/PROFILES")
+        .target(
+            name: "EROKUI",
+            dependencies: [],
+            path: "Sources/EROKUI",
+            resources: [
+                .process("Resources") // Inclut tous les fichiers dans Resources
+            ]
+        ),
+        .target(
+            name: "EROKCore",
+            dependencies: ["MYMECA"],
+            path: "Sources/EROKCore"
+        ),
+        .target(
+            name: "EROKViews",
+            dependencies: ["EROKUI", "EROKCore"],
+            path: "Sources/EROKViews"
+        ),
+        .target(
+            name: "SHIFT",
+            dependencies: ["EROKUI", "EROKCore", "EROKViews"],
+            path: "Sources/SHIFT"
+        ),
+        .target(
+            name: "MYMECA",
+            dependencies: [],
+            path: "Sources/MYMECA"
+        ),
+        .target(
+            name: "PROFILES",
+            dependencies: ["EROKCore"],
+            path: "Sources/PROFILES"
+        )
     ]
 )
