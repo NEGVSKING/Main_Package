@@ -19,6 +19,6 @@ let package = Package(
         .target(name: "EROKCore", dependencies: [], path: "Sources/EROKCore"),
         .target(name: "EROKViews", dependencies: ["EROKUI", "EROKCore"], path: "Sources/EROKViews"),
         .target(name: "SHIFT", dependencies: ["EROKUI", "EROKCore", "EROKViews"], path: "Sources/SHIFT"),
-        .target(name: "MYMECA", dependencies: [], path: "Sources/MYMECA")
+        .target(name: "MYMECA", dependencies: ["EROKUI", "EROKCore", "EROKViews"], path: "Sources/MYMECA")
     ]
 )
