@@ -1,15 +1,11 @@
 //
 //  EROKImage.swift
-//  The Shift
+//  E-ROK-Package
 //
 //  Created by Fabien Koré on 28/09/2025.
 //
 
 
-// Sources/EROKUI/EROKImage.swift
-// E-ROK-Package
-//
-// Created by Fabien Koré on 28/09/2025.
 
 import SwiftUI
 
