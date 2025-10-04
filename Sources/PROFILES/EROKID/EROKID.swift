@@ -1,10 +1,7 @@
+// Sources/PROFILES/EROKID/EROKID.swift
+// E-ROK-Package
 //
-//  EROKID.swift
-//  E-ROK-Package
-//
-//  Created by Fabien Koré on 28/09/2025.
-//
-
+// Created by Fabien Koré on 06/09/2025.
 
 import Foundation
 import EROKCore // Pour Address et Country
@@ -64,6 +61,41 @@ public struct EROKID: Codable, Identifiable {
         guard walletBalances.allSatisfy({ $0.value >= 0 && !$0.value.isNaN }) else {
             fatalError("Les soldes doivent être positifs ou nuls et non NaN")
         }
+        self.id = id
+        self.firstName = firstName
+        self.lastName = lastName
+        self.erokPseudo = erokPseudo
+        self.birthDate = birthDate
+        self.address = address
+        self.phoneNumber = phoneNumber
+        self.nfcKey = nfcKey
+        self.walletBalances = walletBalances
+    }
+
+    // Nouveau init de convenance pour [String: Any] (pour Firestore)
+    public init(from dictionary: [String: Any]) throws {
+        guard let id = dictionary["id"] as? String else {
+            throw NSError(domain: "EROKID", code: -1, userInfo: [NSLocalizedDescriptionKey: "ID manquant"])
+        }
+        guard let firstName = dictionary["firstName"] as? String else {
+            throw NSError(domain: "EROKID", code: -2, userInfo: [NSLocalizedDescriptionKey: "Prénom manquant"])
+        }
+        guard let lastName = dictionary["lastName"] as? String else {
+            throw NSError(domain: "EROKID", code: -3, userInfo: [NSLocalizedDescriptionKey: "Nom manquant"])
+        }
+        guard let erokPseudo = dictionary["erokPseudo"] as? String else {
+            throw NSError(domain: "EROKID", code: -4, userInfo: [NSLocalizedDescriptionKey: "Pseudo manquant"])
+        }
+        guard let birthDateTimestamp = dictionary["birthDate"] as? Double else {
+            throw NSError(domain: "EROKID", code: -5, userInfo: [NSLocalizedDescriptionKey: "Date de naissance manquante"])
+        }
+        let birthDate = Date(timeIntervalSince1970: birthDateTimestamp)
+        let addressDict = dictionary["address"] as? [String: Any]
+        let address = addressDict.flatMap { try? Address(from: $0) }
+        let phoneNumber = dictionary["phoneNumber"] as? String
+        let nfcKey = dictionary["nfcKey"] as? String ?? UUID().uuidString
+        let walletBalances = dictionary["walletBalances"] as? [String: Double] ?? [:]
+
         self.id = id
         self.firstName = firstName
         self.lastName = lastName

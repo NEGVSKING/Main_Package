@@ -1,7 +1,6 @@
 // swift-tools-version: 6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
-// swift-tools-version: 6.1
 import PackageDescription
 
 let package = Package(
@@ -15,7 +14,9 @@ let package = Package(
         .library(name: "MYMECA", targets: ["MYMECA"]),
         .library(name: "PROFILES", targets: ["PROFILES"])
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", .upToNextMajor(from: "12.3.0"))
+    ],
     targets: [
         .target(
             name: "EROKUI",
@@ -45,7 +46,7 @@ let package = Package(
         ),
         .target(
             name: "PROFILES",
-            dependencies: ["EROKCore"],
+            dependencies: ["EROKCore", .product(name: "FirebaseAuth", package: "firebase-ios-sdk"), .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")],
             path: "Sources/PROFILES"
         )
     ]
