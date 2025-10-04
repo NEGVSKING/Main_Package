@@ -8,6 +8,7 @@ import EROKCore // Pour Address et Country
 
 public struct EROKID: Codable, Identifiable {
     public let id: String // ID unique (géré par Firebase Auth)
+    public let email: String // Email de l’utilisateur (lié à Firebase Auth)
     public let firstName: String // Prénom
     public let lastName: String // Nom
     public let erokPseudo: String // Pseudo global pour l’écosystème E-Rok
@@ -20,6 +21,7 @@ public struct EROKID: Codable, Identifiable {
     public func toDictionary() -> [String: Any] {
         var dict: [String: Any] = [
             "id": id,
+            "email": email,
             "firstName": firstName,
             "lastName": lastName,
             "erokPseudo": erokPseudo,
@@ -34,6 +36,7 @@ public struct EROKID: Codable, Identifiable {
 
     public enum CodingKeys: String, CodingKey {
         case id
+        case email
         case firstName
         case lastName
         case erokPseudo
@@ -46,6 +49,7 @@ public struct EROKID: Codable, Identifiable {
 
     public init(
         id: String,
+        email: String,
         firstName: String,
         lastName: String,
         erokPseudo: String,
@@ -55,13 +59,14 @@ public struct EROKID: Codable, Identifiable {
         nfcKey: String = UUID().uuidString,
         walletBalances: [String: Double] = [:]
     ) {
-        guard !firstName.isEmpty, !lastName.isEmpty, !erokPseudo.isEmpty else {
-            fatalError("Le nom, le prénom et le pseudo EROK ne peuvent pas être vides")
+        guard !firstName.isEmpty, !lastName.isEmpty, !erokPseudo.isEmpty, !email.isEmpty else {
+            fatalError("Le nom, le prénom, le pseudo EROK et l’email ne peuvent pas être vides")
         }
         guard walletBalances.allSatisfy({ $0.value >= 0 && !$0.value.isNaN }) else {
             fatalError("Les soldes doivent être positifs ou nuls et non NaN")
         }
         self.id = id
+        self.email = email
         self.firstName = firstName
         self.lastName = lastName
         self.erokPseudo = erokPseudo
@@ -76,6 +81,9 @@ public struct EROKID: Codable, Identifiable {
     public init(from dictionary: [String: Any]) throws {
         guard let id = dictionary["id"] as? String else {
             throw NSError(domain: "EROKID", code: -1, userInfo: [NSLocalizedDescriptionKey: "ID manquant"])
+        }
+        guard let email = dictionary["email"] as? String else {
+            throw NSError(domain: "EROKID", code: -6, userInfo: [NSLocalizedDescriptionKey: "Email manquant"])
         }
         guard let firstName = dictionary["firstName"] as? String else {
             throw NSError(domain: "EROKID", code: -2, userInfo: [NSLocalizedDescriptionKey: "Prénom manquant"])
@@ -97,6 +105,7 @@ public struct EROKID: Codable, Identifiable {
         let walletBalances = dictionary["walletBalances"] as? [String: Double] ?? [:]
 
         self.id = id
+        self.email = email
         self.firstName = firstName
         self.lastName = lastName
         self.erokPseudo = erokPseudo
@@ -111,6 +120,7 @@ public struct EROKID: Codable, Identifiable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
+        email = try container.decode(String.self, forKey: .email)
         firstName = try container.decode(String.self, forKey: .firstName)
         lastName = try container.decode(String.self, forKey: .lastName)
         erokPseudo = try container.decode(String.self, forKey: .erokPseudo)
@@ -125,6 +135,7 @@ public struct EROKID: Codable, Identifiable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
+        try container.encode(email, forKey: .email)
         try container.encode(firstName, forKey: .firstName)
         try container.encode(lastName, forKey: .lastName)
         try container.encode(erokPseudo, forKey: .erokPseudo)
