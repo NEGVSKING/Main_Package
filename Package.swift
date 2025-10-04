@@ -21,9 +21,7 @@ let package = Package(
             name: "EROKUI",
             dependencies: [],
             path: "Sources/EROKUI",
-            resources: [
-                .process("Resources") // Inclut tous les fichiers dans Resources
-            ]
+            resources: [.process("Resources")] // Si images, sinon supprime
         ),
         .target(
             name: "EROKCore",
