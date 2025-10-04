@@ -9,7 +9,7 @@ import FirebaseFirestore
 import EROKCore // Pour Address et Country, si nécessaire
 
 @MainActor
-public class FirebaseManager {
+public class FirebaseManager : ObservableObject {
     public static let shared = FirebaseManager()
 
     private let auth = Auth.auth()
