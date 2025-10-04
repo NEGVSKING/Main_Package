@@ -7,20 +7,20 @@
 
 import SwiftUI
 
-struct ValidationIndicator: View {
+public struct ValidationIndicator: View {
     let isValid: Bool
     let label: String
-    
-    var body: some View {
+
+    public var body: some View {
         HStack(spacing: 8) {
             Image(systemName: isValid ? "checkmark.circle.fill" : "xmark.circle.fill")
                 .foregroundStyle(isValid ? Color.green : Color.red)
-                .font(.system(size: 16)) // Multiple de 4
+                .font(.system(size: 16))
             Text(label)
                 .font(.system(size: 14))
-                .foregroundStyle(.primary) // S'adapte au mode clair/sombre
+                .foregroundStyle(.primary)
         }
-        .padding(.leading, 12) // Multiple de 4
+        .padding(.leading, 12)
     }
 }
 
@@ -29,5 +29,5 @@ struct ValidationIndicator: View {
         ValidationIndicator(isValid: true, label: "Email valide")
         ValidationIndicator(isValid: false, label: "Contient une majuscule")
     }
-    .padding(16) // Multiple de 4
+    .padding(16)
 }
