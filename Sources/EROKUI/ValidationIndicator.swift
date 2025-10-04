@@ -5,14 +5,6 @@
 //  Created by Fabien Koré on 04/10/2025.
 //
 
-
-//
-//  ValidationIndicator.swift
-//  SHIFT.
-//
-//  Created by Fabien Koré on 28/09/2025.
-//
-
 import SwiftUI
 
 struct ValidationIndicator: View {
