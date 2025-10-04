@@ -43,9 +43,9 @@ public class FirebaseManager: ObservableObject {
                 return
             }
             
-            print("Utilisateur temporaire créé avec UID : \(user.uid)")
+            print("Utilisateur temporaire créé avec UID : \(user.uid), email : \(user.email ?? "inconnu"), emailVerified : \(user.isEmailVerified)")
             
-            // Sauvegarder email et pseudo temporairement
+            // Sauvegarder email et pseudo dans pending_users
             self.saveTempUserData(userId: user.uid, email: email, pseudo: pseudo) { saveError in
                 if let saveError = saveError {
                     print("Erreur lors de la sauvegarde des données temporaires : \(saveError.localizedDescription)")
@@ -74,6 +74,8 @@ public class FirebaseManager: ObservableObject {
             return
         }
         
+        print("Tentative d'enregistrement de l'EROKID pour userId: \(userId), emailVerified: \(self.auth.currentUser?.isEmailVerified ?? false)")
+        
         db.collection("users").document(userId).setData(erokID.toDictionary()) { error in
             if let error = error {
                 print("Erreur lors de l'enregistrement de l'EROKID : \(error.localizedDescription)")
@@ -82,8 +84,8 @@ public class FirebaseManager: ObservableObject {
             }
             print("EROKID enregistré pour userId: \(userId)")
             
-            // Supprimer les données temporaires après sauvegarde
-            self.db.collection("temp_users").document(userId).delete { deleteError in
+            // Supprimer les données temporaires
+            self.db.collection("pending_users").document(userId).delete { deleteError in
                 if let deleteError = deleteError {
                     print("Erreur lors de la suppression des données temporaires : \(deleteError.localizedDescription)")
                 } else {
@@ -158,7 +160,7 @@ public class FirebaseManager: ObservableObject {
         }
         
         let tempData = ["email": email, "pseudo": pseudo]
-        db.collection("temp_users").document(userId).setData(tempData) { error in
+        db.collection("pending_users").document(userId).setData(tempData) { error in
             if let error = error {
                 print("Erreur lors de la sauvegarde des données temporaires : \(error.localizedDescription)")
             } else {
@@ -175,7 +177,7 @@ public class FirebaseManager: ObservableObject {
             return
         }
         
-        db.collection("temp_users").document(userId).getDocument { document, error in
+        db.collection("pending_users").document(userId).getDocument { document, error in
             if let error = error {
                 print("Erreur lors de la récupération des données temporaires : \(error.localizedDescription)")
                 completion(.failure(error))
@@ -260,6 +262,11 @@ public class FirebaseManager: ObservableObject {
         guard let user = auth.currentUser else {
             print("Aucun utilisateur connecté pour vérifier l'email")
             return false
+        }
+        user.reload { error in
+            if let error = error {
+                print("Erreur lors du rechargement de l'utilisateur : \(error.localizedDescription)")
+            }
         }
         return user.isEmailVerified
     }
