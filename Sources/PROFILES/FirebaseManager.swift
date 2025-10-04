@@ -84,13 +84,13 @@ public class FirebaseManager : ObservableObject {
 
     // MARK: - Enregistrement EROKID dans Firestore
 
-    private func saveEROKID(_ erokID: EROKID, userId: String, completion: @escaping (Error?) -> Void) {
+    public func saveEROKID(_ erokID: EROKID, userId: String, completion: @escaping (Error?) -> Void) {
         db.collection("users").document(userId).setData(erokID.toDictionary()) { error in
             completion(error)
         }
     }
 
-    private func fetchEROKID(userId: String, completion: @escaping (Result<EROKID, Error>) -> Void) {
+    public func fetchEROKID(userId: String, completion: @escaping (Result<EROKID, Error>) -> Void) {
         db.collection("users").document(userId).getDocument { document, error in
             if let error = error {
                 completion(.failure(error))
