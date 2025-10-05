@@ -32,8 +32,11 @@ public class FirebaseManager: ObservableObject {
         
         auth.createUser(withEmail: email, password: password) { result, error in
             if let error = error {
-                print("Erreur lors de la création de l'utilisateur : \(error.localizedDescription)")
-                completion(.failure(error))
+                let errorMessage = error.localizedDescription.contains("network") ?
+                    NSError(domain: "FirebaseManager", code: -5, userInfo: [NSLocalizedDescriptionKey: "Erreur réseau : Vérifiez votre connexion Internet."]) :
+                    error
+                print("Erreur lors de la création de l'utilisateur : \(errorMessage.localizedDescription)")
+                completion(.failure(errorMessage))
                 return
             }
             guard let user = result?.user else {
@@ -45,7 +48,6 @@ public class FirebaseManager: ObservableObject {
             
             print("Utilisateur temporaire créé avec UID : \(user.uid), email : \(user.email ?? "inconnu"), emailVerified : \(user.isEmailVerified)")
             
-            // Sauvegarder email et pseudo dans pending_users
             self.saveTempUserData(userId: user.uid, email: email, pseudo: pseudo) { saveError in
                 if let saveError = saveError {
                     print("Erreur lors de la sauvegarde des données temporaires : \(saveError.localizedDescription)")
@@ -53,7 +55,6 @@ public class FirebaseManager: ObservableObject {
                     return
                 }
                 
-                // Envoyer email de vérification
                 self.sendEmailVerification { verifyError in
                     if let verifyError = verifyError {
                         print("Erreur lors de l'envoi de l'email de vérification : \(verifyError.localizedDescription)")
@@ -84,7 +85,6 @@ public class FirebaseManager: ObservableObject {
             }
             print("EROKID enregistré pour userId: \(userId)")
             
-            // Supprimer les données temporaires
             self.db.collection("pending_users").document(userId).delete { deleteError in
                 if let deleteError = deleteError {
                     print("Erreur lors de la suppression des données temporaires : \(deleteError.localizedDescription)")
@@ -106,8 +106,11 @@ public class FirebaseManager: ObservableObject {
         
         auth.signIn(withEmail: email, password: password) { result, error in
             if let error = error {
-                print("Erreur lors de la connexion : \(error.localizedDescription)")
-                completion(.failure(error))
+                let errorMessage = error.localizedDescription.contains("network") ?
+                    NSError(domain: "FirebaseManager", code: -5, userInfo: [NSLocalizedDescriptionKey: "Erreur réseau : Vérifiez votre connexion Internet."]) :
+                    error
+                print("Erreur lors de la connexion : \(errorMessage.localizedDescription)")
+                completion(.failure(errorMessage))
                 return
             }
             guard let user = result?.user else {
@@ -117,10 +120,21 @@ public class FirebaseManager: ObservableObject {
                 return
             }
             
-            print("Utilisateur connecté avec UID : \(user.uid)")
+            print("Utilisateur connecté avec UID : \(user.uid), emailVerified: \(user.isEmailVerified)")
             
             self.fetchEROKID(userId: user.uid) { erokIDResult in
-                completion(erokIDResult)
+                switch erokIDResult {
+                case .success(let erokID):
+                    completion(.success(erokID))
+                case .failure(let error):
+                    if error.localizedDescription.contains("EROKID non trouvé") {
+                        // Retourner un EROKID par défaut pour rediriger vers CompleteErokProfileView
+                        let dummyErokID = EROKID(id: user.uid, email: email, firstName: "", lastName: "", erokPseudo: "", birthDate: Date())
+                        completion(.success(dummyErokID))
+                    } else {
+                        completion(.failure(error))
+                    }
+                }
             }
         }
     }
