@@ -8,15 +8,15 @@
 import SwiftUI
 
 public struct EROKShapes: View {
-    public var body: some View {  // Rendu public pour SPM réutilisabilité
+    public var body: some View {  // Public pour accès total en SPM
         Image(systemName: "person.fill")
             .resizable()
             .frame(width: 140, height: 120)
             .aspectRatio(contentMode: .fill, )
-            .clipShape(StarShape())
+            .clipShape(StarShape())  // Init accessible maintenant
             .shadow(color: .black.opacity(0.5), radius: 8) // Ombre ajoutée
             .overlay(
-                StarShape()
+                StarShape()  // Second init public
                     .stroke(
                         LinearGradient(
                             colors:
@@ -32,7 +32,7 @@ public struct EROKShapes: View {
 }
 // Forme d'étoile personnalisée
 public struct StarShape: Shape {
-    public func path(in rect: CGRect) -> Path {  // Explicit public pour cohérence, bien que déjà accessible
+    public func path(in rect: CGRect) -> Path {  // Public pour protocol conformance en SPM
         var path = Path()
         let center = CGPoint(x: rect.midX, y: rect.midY)
         let radius = min(rect.width, rect.height) / 1.5
@@ -57,6 +57,7 @@ public struct StarShape: Shape {
         return path
     }
 }
+
 #Preview {
     EROKShapes()
 }
