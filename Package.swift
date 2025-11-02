@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "E-ROK-Package",
-    platforms: [.iOS(.v17)],
+    platforms: [.iOS(.v18)],  // Aligné Xcode 26 : iOS 18+ pour SwiftUI 6+ / VisionOS support
     products: [
         .library(name: "EROKUI", targets: ["EROKUI"]),
         .library(name: "EROKCore", targets: ["EROKCore"]),
@@ -22,7 +22,7 @@ let package = Package(
             name: "EROKUI",
             dependencies: [],
             path: "Sources/EROKUI",
-            resources: [.process("Resources")] // Si images, sinon supprime
+            resources: [.process("Resources")]  // Bundling : Sources/EROKUI/Resources/"E-ROK_CLUB_TEXT.png"
         ),
         .target(
             name: "EROKCore",
