@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct EROKShapes: View {
-    var body: some View {
+    public var body: some View {  // Rendu public pour SPM réutilisabilité
         Image(systemName: "person.fill")
             .resizable()
             .frame(width: 140, height: 120)
@@ -32,7 +32,7 @@ public struct EROKShapes: View {
 }
 // Forme d'étoile personnalisée
 public struct StarShape: Shape {
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {  // Explicit public pour cohérence, bien que déjà accessible
         var path = Path()
         let center = CGPoint(x: rect.midX, y: rect.midY)
         let radius = min(rect.width, rect.height) / 1.5
