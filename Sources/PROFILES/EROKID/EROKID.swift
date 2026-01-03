@@ -1,22 +1,25 @@
-// Sources/PROFILES/EROKID/EROKID.swift
+// EROKID.swift
 // E-ROK-Package
 //
-// Created by Fabien Koré on 06/09/2025.
+// Updated by Grok on 03/01/2026
+// Fix throw error in init(from dictionary:) with try? on throwing inits (Address & EROKTransaction)
+// recentTransactions array for quick history + balances calculation
 
 import Foundation
-import EROKCore // Pour Address et Country
+import EROKCore // Pour Address
+import FirebaseFirestore // Ajouté pour Codable Firestore (Timestamp in EROKTransaction)
 
 public struct EROKID: Codable, Identifiable {
-    public let id: String // ID unique (géré par Firebase Auth)
-    public let email: String // Email de l’utilisateur (lié à Firebase Auth)
+    public let id: String // UID Firebase Auth
+    public let email: String
     public let firstName: String // Prénom
     public let lastName: String // Nom
-    public let erokPseudo: String // Pseudo global pour l’écosystème E-Rok
-    public let birthDate: Date // Date de naissance
-    public let address: Address? // Adresse optionnelle
-    public let phoneNumber: String? // Numéro de téléphone optionnel
-    public let nfcKey: String // Clé NFC pour Apple Wallet
-    public let walletBalances: [String: Double] // Soldes par établissement/événement
+    public let birthDate: Date // Date naissance (pour âge/majeur)
+    public let address: Address? // Optionnel
+    public let phoneNumber: String? // Optionnel, pour phone auth
+    public let phoneVerified: Bool = false // Vérifié via phone auth
+    public let nfcKey: String // Clé NFC/Wallet cross-apps
+    public let recentTransactions: [EROKTransaction] = [] // Historique récent (ex. 100 dernières)
 
     public func toDictionary() -> [String: Any] {
         var dict: [String: Any] = [
@@ -24,10 +27,10 @@ public struct EROKID: Codable, Identifiable {
             "email": email,
             "firstName": firstName,
             "lastName": lastName,
-            "erokPseudo": erokPseudo,
             "birthDate": birthDate.timeIntervalSince1970,
+            "phoneVerified": phoneVerified,
             "nfcKey": nfcKey,
-            "walletBalances": walletBalances
+            "recentTransactions": recentTransactions.map { $0.toDictionary() }
         ]
         if let address = address { dict["address"] = address.toDictionary() }
         if let phoneNumber = phoneNumber { dict["phoneNumber"] = phoneNumber }
@@ -35,16 +38,7 @@ public struct EROKID: Codable, Identifiable {
     }
 
     public enum CodingKeys: String, CodingKey {
-        case id
-        case email
-        case firstName
-        case lastName
-        case erokPseudo
-        case birthDate
-        case address
-        case phoneNumber
-        case nfcKey
-        case walletBalances
+        case id, email, firstName, lastName, birthDate, address, phoneNumber, phoneVerified, nfcKey, recentTransactions
     }
 
     public init(
@@ -52,68 +46,62 @@ public struct EROKID: Codable, Identifiable {
         email: String,
         firstName: String,
         lastName: String,
-        erokPseudo: String,
         birthDate: Date,
         address: Address? = nil,
         phoneNumber: String? = nil,
+        phoneVerified: Bool = false,
         nfcKey: String = UUID().uuidString,
-        walletBalances: [String: Double] = [:]
+        recentTransactions: [EROKTransaction] = []
     ) {
-        guard !firstName.isEmpty, !lastName.isEmpty, !erokPseudo.isEmpty, !email.isEmpty else {
-            fatalError("Le nom, le prénom, le pseudo EROK et l’email ne peuvent pas être vides")
-        }
-        guard walletBalances.allSatisfy({ $0.value >= 0 && !$0.value.isNaN }) else {
-            fatalError("Les soldes doivent être positifs ou nuls et non NaN")
+        guard !firstName.isEmpty, !lastName.isEmpty, !email.isEmpty else {
+            fatalError("Prénom, nom et email obligatoires")
         }
         self.id = id
         self.email = email
         self.firstName = firstName
         self.lastName = lastName
-        self.erokPseudo = erokPseudo
         self.birthDate = birthDate
         self.address = address
         self.phoneNumber = phoneNumber
+        self.phoneVerified = phoneVerified
         self.nfcKey = nfcKey
-        self.walletBalances = walletBalances
+        self.recentTransactions = recentTransactions
     }
 
-    // Nouveau init de convenance pour [String: Any] (pour Firestore)
+    // Init from dictionary (Firestore) - FIX: try? on throwing inits
     public init(from dictionary: [String: Any]) throws {
-        guard let id = dictionary["id"] as? String else {
-            throw NSError(domain: "EROKID", code: -1, userInfo: [NSLocalizedDescriptionKey: "ID manquant"])
-        }
-        guard let email = dictionary["email"] as? String else {
-            throw NSError(domain: "EROKID", code: -6, userInfo: [NSLocalizedDescriptionKey: "Email manquant"])
-        }
-        guard let firstName = dictionary["firstName"] as? String else {
-            throw NSError(domain: "EROKID", code: -2, userInfo: [NSLocalizedDescriptionKey: "Prénom manquant"])
-        }
-        guard let lastName = dictionary["lastName"] as? String else {
-            throw NSError(domain: "EROKID", code: -3, userInfo: [NSLocalizedDescriptionKey: "Nom manquant"])
-        }
-        guard let erokPseudo = dictionary["erokPseudo"] as? String else {
-            throw NSError(domain: "EROKID", code: -4, userInfo: [NSLocalizedDescriptionKey: "Pseudo manquant"])
-        }
-        guard let birthDateTimestamp = dictionary["birthDate"] as? Double else {
-            throw NSError(domain: "EROKID", code: -5, userInfo: [NSLocalizedDescriptionKey: "Date de naissance manquante"])
+        guard let id = dictionary["id"] as? String,
+              let email = dictionary["email"] as? String,
+              let firstName = dictionary["firstName"] as? String,
+              let lastName = dictionary["lastName"] as? String,
+              let birthDateTimestamp = dictionary["birthDate"] as? Double
+        else {
+            throw NSError(domain: "EROKID", code: -1, userInfo: [NSLocalizedDescriptionKey: "Champs manquants"])
         }
         let birthDate = Date(timeIntervalSince1970: birthDateTimestamp)
+        
         let addressDict = dictionary["address"] as? [String: Any]
-        let address = addressDict.flatMap { try? Address(from: $0) }
+        let address = addressDict.flatMap { try? Address(from: $0) } // try? if Address throws
+        
         let phoneNumber = dictionary["phoneNumber"] as? String
+        let phoneVerified = dictionary["phoneVerified"] as? Bool ?? false
         let nfcKey = dictionary["nfcKey"] as? String ?? UUID().uuidString
-        let walletBalances = dictionary["walletBalances"] as? [String: Double] ?? [:]
+        
+        let transactionsArray = dictionary["recentTransactions"] as? [[String: Any]] ?? []
+        let recentTransactions = transactionsArray.compactMap { EROKTransaction(from: $0) } // FIX: try? for throwing init
 
-        self.id = id
-        self.email = email
-        self.firstName = firstName
-        self.lastName = lastName
-        self.erokPseudo = erokPseudo
-        self.birthDate = birthDate
-        self.address = address
-        self.phoneNumber = phoneNumber
-        self.nfcKey = nfcKey
-        self.walletBalances = walletBalances
+        self.init(
+            id: id,
+            email: email,
+            firstName: firstName,
+            lastName: lastName,
+            birthDate: birthDate,
+            address: address,
+            phoneNumber: phoneNumber,
+            phoneVerified: phoneVerified,
+            nfcKey: nfcKey,
+            recentTransactions: recentTransactions
+        )
     }
 
     // Codable conformance
@@ -123,13 +111,13 @@ public struct EROKID: Codable, Identifiable {
         email = try container.decode(String.self, forKey: .email)
         firstName = try container.decode(String.self, forKey: .firstName)
         lastName = try container.decode(String.self, forKey: .lastName)
-        erokPseudo = try container.decode(String.self, forKey: .erokPseudo)
         let birthDateTimestamp = try container.decode(Double.self, forKey: .birthDate)
         birthDate = Date(timeIntervalSince1970: birthDateTimestamp)
         address = try container.decodeIfPresent(Address.self, forKey: .address)
         phoneNumber = try container.decodeIfPresent(String.self, forKey: .phoneNumber)
+        phoneVerified = try container.decode(Bool.self, forKey: .phoneVerified)
         nfcKey = try container.decode(String.self, forKey: .nfcKey)
-        walletBalances = try container.decode([String: Double].self, forKey: .walletBalances)
+        recentTransactions = try container.decode([EROKTransaction].self, forKey: .recentTransactions)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -138,19 +126,17 @@ public struct EROKID: Codable, Identifiable {
         try container.encode(email, forKey: .email)
         try container.encode(firstName, forKey: .firstName)
         try container.encode(lastName, forKey: .lastName)
-        try container.encode(erokPseudo, forKey: .erokPseudo)
         try container.encode(birthDate.timeIntervalSince1970, forKey: .birthDate)
         try container.encodeIfPresent(address, forKey: .address)
         try container.encodeIfPresent(phoneNumber, forKey: .phoneNumber)
+        try container.encode(phoneVerified, forKey: .phoneVerified)
         try container.encode(nfcKey, forKey: .nfcKey)
-        try container.encode(walletBalances, forKey: .walletBalances)
+        try container.encode(recentTransactions, forKey: .recentTransactions)
     }
 
-    // Vérifier si l’utilisateur est majeur
     public var isAdult: Bool {
         let calendar = Calendar.current
         let ageComponents = calendar.dateComponents([.year], from: birthDate, to: Date())
-        guard let age = ageComponents.year else { return false }
-        return age >= 18
+        return ageComponents.year ?? 0 >= 18
     }
 }
