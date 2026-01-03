@@ -4,7 +4,6 @@
 // Created by Fabien Koré on 10/06/2025.
 
 import Foundation
-
 public struct Address: Codable {
     public let streetNumber: String?
     public let streetName: String?

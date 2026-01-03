@@ -26,22 +26,22 @@ let package = Package(
         ),
         .target(
             name: "EROKCore",
-            dependencies: ["MYMECA"],
+            dependencies: ["MYMECA", .product(name: "FirebaseAuth", package: "firebase-ios-sdk"), .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")],
             path: "Sources/EROKCore"
         ),
         .target(
             name: "EROKViews",
-            dependencies: ["EROKUI", "EROKCore"],
+            dependencies: ["EROKUI", "EROKCore", .product(name: "FirebaseAuth", package: "firebase-ios-sdk"), .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")],
             path: "Sources/EROKViews"
         ),
         .target(
             name: "SHIFT",
-            dependencies: ["EROKUI", "EROKCore", "EROKViews"],
+            dependencies: ["EROKUI", "EROKCore", "EROKViews",.product(name: "FirebaseAuth", package: "firebase-ios-sdk"), .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")],
             path: "Sources/SHIFT"
         ),
         .target(
             name: "MYMECA",
-            dependencies: [],
+            dependencies: [.product(name: "FirebaseAuth", package: "firebase-ios-sdk"), .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")],
             path: "Sources/MYMECA"
         ),
         .target(
