@@ -15,7 +15,7 @@ let package = Package(
         .library(name: "PROFILES", targets: ["PROFILES"])
     ],
     dependencies: [
-        .package(url: "https://github.com/firebase/firebase-ios-sdk", .upToNextMajor(from: "12.3.0"))
+        // Firebase supprimé – on gère auth/Firestore directement dans l'app SHIFT
     ],
     targets: [
         .target(
@@ -26,27 +26,27 @@ let package = Package(
         ),
         .target(
             name: "EROKCore",
-            dependencies: ["MYMECA", .product(name: "FirebaseAuth", package: "firebase-ios-sdk"), .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")],
+            dependencies: ["MYMECA"],
             path: "Sources/EROKCore"
         ),
         .target(
             name: "EROKViews",
-            dependencies: ["EROKUI", "EROKCore", .product(name: "FirebaseAuth", package: "firebase-ios-sdk"), .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")],
+            dependencies: ["EROKUI", "EROKCore"],
             path: "Sources/EROKViews"
         ),
         .target(
             name: "SHIFT",
-            dependencies: ["EROKUI", "EROKCore", "EROKViews",.product(name: "FirebaseAuth", package: "firebase-ios-sdk"), .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")],
+            dependencies: ["EROKUI", "EROKCore", "EROKViews"],
             path: "Sources/SHIFT"
         ),
         .target(
             name: "MYMECA",
-            dependencies: [.product(name: "FirebaseAuth", package: "firebase-ios-sdk"), .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")],
+            dependencies: [],
             path: "Sources/MYMECA"
         ),
         .target(
             name: "PROFILES",
-            dependencies: ["EROKCore", .product(name: "FirebaseAuth", package: "firebase-ios-sdk"), .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")],
+            dependencies: ["EROKUI", "EROKCore", "EROKViews","SHIFT", "MYMECA"],
             path: "Sources/PROFILES"
         )
     ]

@@ -1,26 +1,26 @@
 // EROKID.swift
-// E-ROK-Package
+// SHIFT App
 //
-// Updated by Grok on 03/01/2026
-// Fix throw error in init(from dictionary:) with try? on throwing inits (Address & EROKTransaction)
-// recentTransactions array for quick history + balances calculation
+// Created for SHIFT on 04/01/2026
+// EROKID global minimal – identité partagée écosystème E-ROK
+// Import EROKCore pour Address (struct du package)
 
 import Foundation
-import EROKCore // Pour Address
-import FirebaseFirestore // Ajouté pour Codable Firestore (Timestamp in EROKTransaction)
+import EROKCore // Pour Address (dans Sources/EROKCore/Address.swift)
 
 public struct EROKID: Codable, Identifiable {
     public let id: String // UID Firebase Auth
     public let email: String
     public let firstName: String // Prénom
     public let lastName: String // Nom
-    public let birthDate: Date // Date naissance (pour âge/majeur)
+    public let birthDate: Date // Date naissance (pour calcul âge/majeur)
     public let address: Address? // Optionnel
     public let phoneNumber: String? // Optionnel, pour phone auth
-    public let phoneVerified: Bool = false // Vérifié via phone auth
+    public let phoneVerified: Bool // Vérifié via phone auth (premier paiement sensible)
     public let nfcKey: String // Clé NFC/Wallet cross-apps
-    public let recentTransactions: [EROKTransaction] = [] // Historique récent (ex. 100 dernières)
+    public let recentTransactions: [EROKTransaction] // Historique récent (ex. 100 dernières)
 
+    // toDictionary pour écriture Firestore (dans l'app)
     public func toDictionary() -> [String: Any] {
         var dict: [String: Any] = [
             "id": id,
@@ -54,7 +54,7 @@ public struct EROKID: Codable, Identifiable {
         recentTransactions: [EROKTransaction] = []
     ) {
         guard !firstName.isEmpty, !lastName.isEmpty, !email.isEmpty else {
-            fatalError("Prénom, nom et email obligatoires")
+            fatalError("Prénom, nom et email obligatoires pour E-ROK ID")
         }
         self.id = id
         self.email = email
@@ -68,7 +68,7 @@ public struct EROKID: Codable, Identifiable {
         self.recentTransactions = recentTransactions
     }
 
-    // Init from dictionary (Firestore) - FIX: try? on throwing inits
+    // Init from dictionary (Firestore) – safe parsing
     public init(from dictionary: [String: Any]) throws {
         guard let id = dictionary["id"] as? String,
               let email = dictionary["email"] as? String,
@@ -76,19 +76,19 @@ public struct EROKID: Codable, Identifiable {
               let lastName = dictionary["lastName"] as? String,
               let birthDateTimestamp = dictionary["birthDate"] as? Double
         else {
-            throw NSError(domain: "EROKID", code: -1, userInfo: [NSLocalizedDescriptionKey: "Champs manquants"])
+            throw NSError(domain: "EROKID", code: -1, userInfo: [NSLocalizedDescriptionKey: "Champs obligatoires manquants"])
         }
         let birthDate = Date(timeIntervalSince1970: birthDateTimestamp)
         
         let addressDict = dictionary["address"] as? [String: Any]
-        let address = addressDict.flatMap { try? Address(from: $0) } // try? if Address throws
+        let address = addressDict.flatMap { try? Address(from: $0) } // Garde try? car Address init throws
         
         let phoneNumber = dictionary["phoneNumber"] as? String
         let phoneVerified = dictionary["phoneVerified"] as? Bool ?? false
         let nfcKey = dictionary["nfcKey"] as? String ?? UUID().uuidString
         
         let transactionsArray = dictionary["recentTransactions"] as? [[String: Any]] ?? []
-        let recentTransactions = transactionsArray.compactMap { EROKTransaction(from: $0) } // FIX: try? for throwing init
+        let recentTransactions = transactionsArray.compactMap { EROKTransaction(from: $0) } // Retire try? – init failable
 
         self.init(
             id: id,
@@ -134,6 +134,7 @@ public struct EROKID: Codable, Identifiable {
         try container.encode(recentTransactions, forKey: .recentTransactions)
     }
 
+    // Calcul âge/majeur (utile pour nightlife 18+)
     public var isAdult: Bool {
         let calendar = Calendar.current
         let ageComponents = calendar.dateComponents([.year], from: birthDate, to: Date())

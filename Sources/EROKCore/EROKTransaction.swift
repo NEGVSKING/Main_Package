@@ -3,40 +3,27 @@
 // E-ROK-Package
 //
 // Created by Grok on 03/01/2026.
-// Ajouté pour l'historique transactions centralisé cross-apps E-ROK
-// (SHIFT, FIT, MYMECA, etc.) avec support contextes variés (club, magasin, promo, recharge...)
+// Version sans Firebase – Date au lieu de Timestamp, id optionnel manuel
+// Historique transactions centralisé cross-apps E-ROK (SHIFT, FIT, MYMECA, etc.)
 
 import Foundation
-import FirebaseAuth
-import FirebaseFirestore
-import EROKCore
 
 public struct EROKTransaction: Codable, Identifiable, Hashable {
-    @DocumentID public var id: String?                    // Auto-ID Firestore ou UUID (optionnel pour new docs)
-    public let appName: String                            // Ex. "SHIFT", "FIT", "MYMECA" – pour tri par app
-    public let title: String                              // Ex. "Bouteille Moët", "Abonnement SHIFT+", "Achat robe"
-    public let amount: Double                             // Positif = crédit/recharge, négatif = débit
-    public let date: Timestamp                            // Date/heure transaction (Firestore Timestamp pour tri/realtime)
-    public let type: String?                              // Optionnel : "consommation", "pourboire", "abonnement", "enchère", "recharge", "achat"
-    public let contextType: String                        // Ex. "club", "magasin", "promo", "recharge", "autre"
-    public let contextId: String                          // ID unique du contexte (clubId, magasinId, promoId, etc.)
-    public let contextName: String?                       // Nom lisible (ex. "Le Night Club", "Boutique FIT Paris", "Promo Nouvel An")
+    public var id: String?                                // Auto-ID Firestore ou UUID (généré dans l'app)
+    public let appName: String                            // Ex. "SHIFT", "FIT", "MYMECA"
+    public let title: String                              // Ex. "Bouteille Moët", "Abonnement SHIFT+"
+    public let amount: Double                             // Positif = crédit, négatif = débit
+    public let date: Date                                 // Date/heure transaction (standard Date)
+    public let type: String?                              // Optionnel : "consommation", "pourboire", "abonnement", "enchère", "recharge"
+    public let contextType: String                        // Ex. "club", "magasin", "promo", "recharge"
+    public let contextId: String                          // ID unique du contexte
+    public let contextName: String?                       // Nom lisible
     public let description: String?                       // Détails supplémentaires
-    public let soldeApres: Double?                        // Solde wallet après transaction (pour traçabilité UI)
+    public let soldeApres: Double?                        // Solde après transaction
 
-    // MARK: - CodingKeys (pour personnalisation si besoin)
+    // MARK: - CodingKeys
     enum CodingKeys: String, CodingKey {
-        case id
-        case appName
-        case title
-        case amount
-        case date
-        case type
-        case contextType
-        case contextId
-        case contextName
-        case description
-        case soldeApres
+        case id, appName, title, amount, date, type, contextType, contextId, contextName, description, soldeApres
     }
 
     // MARK: - Init principal
@@ -45,7 +32,7 @@ public struct EROKTransaction: Codable, Identifiable, Hashable {
         appName: String,
         title: String,
         amount: Double,
-        date: Timestamp = Timestamp(),
+        date: Date = Date(),
         type: String? = nil,
         contextType: String,
         contextId: String,
@@ -66,18 +53,20 @@ public struct EROKTransaction: Codable, Identifiable, Hashable {
         self.soldeApres = soldeApres
     }
 
-    // MARK: - Convenience init depuis Firestore data (pour sécurité parsing)
+    // MARK: - Convenience init depuis dictionary (Firestore dans l'app)
     public init?(from dictionary: [String: Any]) {
         guard
             let appName = dictionary["appName"] as? String,
             let title = dictionary["title"] as? String,
             let amount = dictionary["amount"] as? Double,
-            let date = dictionary["date"] as? Timestamp,
+            let dateTimestamp = dictionary["date"] as? Double,
             let contextType = dictionary["contextType"] as? String,
             let contextId = dictionary["contextId"] as? String
         else {
             return nil
         }
+
+        let date = Date(timeIntervalSince1970: dateTimestamp)
 
         self.id = dictionary["id"] as? String
         self.appName = appName
@@ -92,16 +81,17 @@ public struct EROKTransaction: Codable, Identifiable, Hashable {
         self.soldeApres = dictionary["soldeApres"] as? Double
     }
 
-    // MARK: - toDictionary pour écriture Firestore
+    // MARK: - toDictionary pour écriture Firestore (dans l'app)
     public func toDictionary() -> [String: Any] {
         var dict: [String: Any] = [
             "appName": appName,
             "title": title,
             "amount": amount,
-            "date": date,
+            "date": date.timeIntervalSince1970,
             "contextType": contextType,
             "contextId": contextId
         ]
+        if let id = id { dict["id"] = id }
         if let type = type { dict["type"] = type }
         if let contextName = contextName { dict["contextName"] = contextName }
         if let description = description { dict["description"] = description }
@@ -109,7 +99,7 @@ public struct EROKTransaction: Codable, Identifiable, Hashable {
         return dict
     }
 
-    // MARK: - Hashable conformance (pour List SwiftUI)
+    // MARK: - Hashable (pour List SwiftUI)
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
