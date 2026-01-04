@@ -3,7 +3,7 @@
 //
 // Created for SHIFT on 04/01/2026
 // EROKID global minimal – identité partagée écosystème E-ROK
-// Import EROKCore pour Address (struct du package)
+// erokPseudo est maintenant optionnel (pas obligatoire)
 
 import Foundation
 import EROKCore // Pour Address (dans Sources/EROKCore/Address.swift)
@@ -13,6 +13,7 @@ public struct EROKID: Codable, Identifiable {
     public let email: String
     public let firstName: String // Prénom
     public let lastName: String // Nom
+    public let erokPseudo: String? // Pseudo global E-ROK – optionnel
     public let birthDate: Date // Date naissance (pour calcul âge/majeur)
     public let address: Address? // Optionnel
     public let phoneNumber: String? // Optionnel, pour phone auth
@@ -32,13 +33,14 @@ public struct EROKID: Codable, Identifiable {
             "nfcKey": nfcKey,
             "recentTransactions": recentTransactions.map { $0.toDictionary() }
         ]
+        if let erokPseudo = erokPseudo { dict["erokPseudo"] = erokPseudo }
         if let address = address { dict["address"] = address.toDictionary() }
         if let phoneNumber = phoneNumber { dict["phoneNumber"] = phoneNumber }
         return dict
     }
 
     public enum CodingKeys: String, CodingKey {
-        case id, email, firstName, lastName, birthDate, address, phoneNumber, phoneVerified, nfcKey, recentTransactions
+        case id, email, firstName, lastName, erokPseudo, birthDate, address, phoneNumber, phoneVerified, nfcKey, recentTransactions
     }
 
     public init(
@@ -46,6 +48,7 @@ public struct EROKID: Codable, Identifiable {
         email: String,
         firstName: String,
         lastName: String,
+        erokPseudo: String? = nil,
         birthDate: Date,
         address: Address? = nil,
         phoneNumber: String? = nil,
@@ -60,6 +63,7 @@ public struct EROKID: Codable, Identifiable {
         self.email = email
         self.firstName = firstName
         self.lastName = lastName
+        self.erokPseudo = erokPseudo
         self.birthDate = birthDate
         self.address = address
         self.phoneNumber = phoneNumber
@@ -81,20 +85,22 @@ public struct EROKID: Codable, Identifiable {
         let birthDate = Date(timeIntervalSince1970: birthDateTimestamp)
         
         let addressDict = dictionary["address"] as? [String: Any]
-        let address = addressDict.flatMap { try? Address(from: $0) } // Garde try? car Address init throws
+        let address = addressDict.flatMap { try? Address(from: $0) }
         
         let phoneNumber = dictionary["phoneNumber"] as? String
         let phoneVerified = dictionary["phoneVerified"] as? Bool ?? false
         let nfcKey = dictionary["nfcKey"] as? String ?? UUID().uuidString
+        let erokPseudo = dictionary["erokPseudo"] as? String
         
         let transactionsArray = dictionary["recentTransactions"] as? [[String: Any]] ?? []
-        let recentTransactions = transactionsArray.compactMap { EROKTransaction(from: $0) } // Retire try? – init failable
+        let recentTransactions = transactionsArray.compactMap { EROKTransaction(from: $0) }
 
         self.init(
             id: id,
             email: email,
             firstName: firstName,
             lastName: lastName,
+            erokPseudo: erokPseudo,
             birthDate: birthDate,
             address: address,
             phoneNumber: phoneNumber,
@@ -111,6 +117,7 @@ public struct EROKID: Codable, Identifiable {
         email = try container.decode(String.self, forKey: .email)
         firstName = try container.decode(String.self, forKey: .firstName)
         lastName = try container.decode(String.self, forKey: .lastName)
+        erokPseudo = try container.decodeIfPresent(String.self, forKey: .erokPseudo)
         let birthDateTimestamp = try container.decode(Double.self, forKey: .birthDate)
         birthDate = Date(timeIntervalSince1970: birthDateTimestamp)
         address = try container.decodeIfPresent(Address.self, forKey: .address)
@@ -126,6 +133,7 @@ public struct EROKID: Codable, Identifiable {
         try container.encode(email, forKey: .email)
         try container.encode(firstName, forKey: .firstName)
         try container.encode(lastName, forKey: .lastName)
+        try container.encodeIfPresent(erokPseudo, forKey: .erokPseudo)
         try container.encode(birthDate.timeIntervalSince1970, forKey: .birthDate)
         try container.encodeIfPresent(address, forKey: .address)
         try container.encodeIfPresent(phoneNumber, forKey: .phoneNumber)
