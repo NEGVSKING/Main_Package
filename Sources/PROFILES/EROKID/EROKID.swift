@@ -3,10 +3,11 @@
 //
 // Created for SHIFT on 04/01/2026
 // EROKID global minimal – identité partagée écosystème E-ROK
-// erokPseudo est maintenant optionnel (pas obligatoire)
+// birthDate est maintenant du type BirthDate (struct EROKCore)
+// erokPseudo reste optionnel
 
 import Foundation
-import EROKCore // Pour Address (dans Sources/EROKCore/Address.swift)
+import EROKCore // Pour Address et BirthDate
 
 public struct EROKID: Codable, Identifiable {
     public let id: String // UID Firebase Auth
@@ -14,21 +15,21 @@ public struct EROKID: Codable, Identifiable {
     public let firstName: String // Prénom
     public let lastName: String // Nom
     public let erokPseudo: String? // Pseudo global E-ROK – optionnel
-    public let birthDate: Date // Date naissance (pour calcul âge/majeur)
+    public let birthDate: BirthDate // Date de naissance (struct BirthDate)
     public let address: Address? // Optionnel
     public let phoneNumber: String? // Optionnel, pour phone auth
-    public let phoneVerified: Bool // Vérifié via phone auth (premier paiement sensible)
+    public let phoneVerified: Bool // Vérifié via phone auth
     public let nfcKey: String // Clé NFC/Wallet cross-apps
-    public let recentTransactions: [EROKTransaction] // Historique récent (ex. 100 dernières)
+    public let recentTransactions: [EROKTransaction] // Historique récent
 
-    // toDictionary pour écriture Firestore (dans l'app)
+    // toDictionary pour écriture Firestore
     public func toDictionary() -> [String: Any] {
         var dict: [String: Any] = [
             "id": id,
             "email": email,
             "firstName": firstName,
             "lastName": lastName,
-            "birthDate": birthDate.timeIntervalSince1970,
+            "birthDate": birthDate.toDictionary(), // Utilise la méthode de BirthDate
             "phoneVerified": phoneVerified,
             "nfcKey": nfcKey,
             "recentTransactions": recentTransactions.map { $0.toDictionary() }
@@ -49,7 +50,7 @@ public struct EROKID: Codable, Identifiable {
         firstName: String,
         lastName: String,
         erokPseudo: String? = nil,
-        birthDate: Date,
+        birthDate: BirthDate,
         address: Address? = nil,
         phoneNumber: String? = nil,
         phoneVerified: Bool = false,
@@ -78,11 +79,11 @@ public struct EROKID: Codable, Identifiable {
               let email = dictionary["email"] as? String,
               let firstName = dictionary["firstName"] as? String,
               let lastName = dictionary["lastName"] as? String,
-              let birthDateTimestamp = dictionary["birthDate"] as? Double
+              let birthDateDict = dictionary["birthDate"] as? [String: Any],
+              let birthDate = try? BirthDate(from: birthDateDict)
         else {
             throw NSError(domain: "EROKID", code: -1, userInfo: [NSLocalizedDescriptionKey: "Champs obligatoires manquants"])
         }
-        let birthDate = Date(timeIntervalSince1970: birthDateTimestamp)
         
         let addressDict = dictionary["address"] as? [String: Any]
         let address = addressDict.flatMap { try? Address(from: $0) }
@@ -118,8 +119,7 @@ public struct EROKID: Codable, Identifiable {
         firstName = try container.decode(String.self, forKey: .firstName)
         lastName = try container.decode(String.self, forKey: .lastName)
         erokPseudo = try container.decodeIfPresent(String.self, forKey: .erokPseudo)
-        let birthDateTimestamp = try container.decode(Double.self, forKey: .birthDate)
-        birthDate = Date(timeIntervalSince1970: birthDateTimestamp)
+        birthDate = try container.decode(BirthDate.self, forKey: .birthDate)
         address = try container.decodeIfPresent(Address.self, forKey: .address)
         phoneNumber = try container.decodeIfPresent(String.self, forKey: .phoneNumber)
         phoneVerified = try container.decode(Bool.self, forKey: .phoneVerified)
@@ -134,7 +134,7 @@ public struct EROKID: Codable, Identifiable {
         try container.encode(firstName, forKey: .firstName)
         try container.encode(lastName, forKey: .lastName)
         try container.encodeIfPresent(erokPseudo, forKey: .erokPseudo)
-        try container.encode(birthDate.timeIntervalSince1970, forKey: .birthDate)
+        try container.encode(birthDate, forKey: .birthDate)
         try container.encodeIfPresent(address, forKey: .address)
         try container.encodeIfPresent(phoneNumber, forKey: .phoneNumber)
         try container.encode(phoneVerified, forKey: .phoneVerified)
@@ -142,10 +142,8 @@ public struct EROKID: Codable, Identifiable {
         try container.encode(recentTransactions, forKey: .recentTransactions)
     }
 
-    // Calcul âge/majeur (utile pour nightlife 18+)
+    // Calcul âge/majeur (via BirthDate.calculateAge())
     public var isAdult: Bool {
-        let calendar = Calendar.current
-        let ageComponents = calendar.dateComponents([.year], from: birthDate, to: Date())
-        return ageComponents.year ?? 0 >= 18
+        birthDate.calculateAge() >= 18
     }
 }
