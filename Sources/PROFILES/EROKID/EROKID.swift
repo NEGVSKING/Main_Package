@@ -80,7 +80,7 @@ public struct EROKID: Codable, Identifiable {
               let firstName = dictionary["firstName"] as? String,
               let lastName = dictionary["lastName"] as? String,
               let birthDateDict = dictionary["birthDate"] as? [String: Any],
-              let birthDate = try? BirthDate(from: birthDateDict)
+              let birthDate = try? BirthDate(from: birthDateDict as! Decoder)
         else {
             throw NSError(domain: "EROKID", code: -1, userInfo: [NSLocalizedDescriptionKey: "Champs obligatoires manquants"])
         }
