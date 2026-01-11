@@ -1,10 +1,9 @@
+//
 // EROKID.swift
 // SHIFT App
 //
 // Created for SHIFT on 04/01/2026
 // EROKID global minimal – identité partagée écosystème E-ROK
-// birthDate est maintenant du type BirthDate (struct EROKCore)
-// erokPseudo reste optionnel
 
 import Foundation
 import EROKCore // Pour Address et BirthDate
@@ -15,13 +14,13 @@ public struct EROKID: Codable, Identifiable {
     public let firstName: String // Prénom
     public let lastName: String // Nom
     public let erokPseudo: String? // Pseudo global E-ROK – optionnel
-    public let birthDate: BirthDate // Date de naissance (struct BirthDate)
+    public let birthDate: BirthDate // Date de naissance
     public let address: Address? // Optionnel
-    public let phoneNumber: String? // Optionnel, pour phone auth
-    public let phoneVerified: Bool // Vérifié via phone auth
-    public let nfcKey: String // Clé NFC/Wallet cross-apps
-    public let recentTransactions: [EROKTransaction] // Historique récent
-
+    public let phoneNumber: String? // Optionnel
+    public let phoneVerified: Bool
+    public let nfcKey: String
+    public let recentTransactions: [EROKTransaction]
+    
     // toDictionary pour écriture Firestore
     public func toDictionary() -> [String: Any] {
         var dict: [String: Any] = [
@@ -29,7 +28,7 @@ public struct EROKID: Codable, Identifiable {
             "email": email,
             "firstName": firstName,
             "lastName": lastName,
-            "birthDate": birthDate.toDictionary(), // Utilise la méthode de BirthDate
+            "birthDate": birthDate.toDictionary(),
             "phoneVerified": phoneVerified,
             "nfcKey": nfcKey,
             "recentTransactions": recentTransactions.map { $0.toDictionary() }
@@ -39,11 +38,11 @@ public struct EROKID: Codable, Identifiable {
         if let phoneNumber = phoneNumber { dict["phoneNumber"] = phoneNumber }
         return dict
     }
-
+    
     public enum CodingKeys: String, CodingKey {
         case id, email, firstName, lastName, erokPseudo, birthDate, address, phoneNumber, phoneVerified, nfcKey, recentTransactions
     }
-
+    
     public init(
         id: String,
         email: String,
@@ -72,30 +71,43 @@ public struct EROKID: Codable, Identifiable {
         self.nfcKey = nfcKey
         self.recentTransactions = recentTransactions
     }
-
-    // Init from dictionary (Firestore) – safe parsing
+    
+    // Init from dictionary (Firestore) – corrigé avec JSONDecoder pour nested Codable
     public init(from dictionary: [String: Any]) throws {
         guard let id = dictionary["id"] as? String,
               let email = dictionary["email"] as? String,
               let firstName = dictionary["firstName"] as? String,
-              let lastName = dictionary["lastName"] as? String,
-              let birthDateDict = dictionary["birthDate"] as? [String: Any],
-              let birthDate = try? BirthDate(from: birthDateDict as! Decoder)
+              let lastName = dictionary["lastName"] as? String
         else {
             throw NSError(domain: "EROKID", code: -1, userInfo: [NSLocalizedDescriptionKey: "Champs obligatoires manquants"])
         }
         
-        let addressDict = dictionary["address"] as? [String: Any]
-        let address = addressDict.flatMap { try? Address(from: $0) }
+        // BirthDate (nested Codable)
+        guard let birthDateDict = dictionary["birthDate"] as? [String: Any] else {
+            throw NSError(domain: "EROKID", code: -2, userInfo: [NSLocalizedDescriptionKey: "birthDate manquant"])
+        }
+        let birthDateData = try JSONSerialization.data(withJSONObject: birthDateDict)
+        let birthDate = try JSONDecoder().decode(BirthDate.self, from: birthDateData)
+        
+        // Address (optionnel nested Codable)
+        var address: Address? = nil
+        if let addressDict = dictionary["address"] as? [String: Any] {
+            let addressData = try JSONSerialization.data(withJSONObject: addressDict)
+            address = try JSONDecoder().decode(Address.self, from: addressData)
+        }
         
         let phoneNumber = dictionary["phoneNumber"] as? String
         let phoneVerified = dictionary["phoneVerified"] as? Bool ?? false
         let nfcKey = dictionary["nfcKey"] as? String ?? UUID().uuidString
         let erokPseudo = dictionary["erokPseudo"] as? String
         
+        // recentTransactions (array nested Codable)
         let transactionsArray = dictionary["recentTransactions"] as? [[String: Any]] ?? []
-        let recentTransactions = transactionsArray.compactMap { EROKTransaction(from: $0) }
-
+        let recentTransactions = try transactionsArray.map { dict in
+            let data = try JSONSerialization.data(withJSONObject: dict)
+            return try JSONDecoder().decode(EROKTransaction.self, from: data)
+        }
+        
         self.init(
             id: id,
             email: email,
@@ -110,8 +122,8 @@ public struct EROKID: Codable, Identifiable {
             recentTransactions: recentTransactions
         )
     }
-
-    // Codable conformance
+    
+    // Codable conformance (inchangé)
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
@@ -126,7 +138,7 @@ public struct EROKID: Codable, Identifiable {
         nfcKey = try container.decode(String.self, forKey: .nfcKey)
         recentTransactions = try container.decode([EROKTransaction].self, forKey: .recentTransactions)
     }
-
+    
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
@@ -141,8 +153,7 @@ public struct EROKID: Codable, Identifiable {
         try container.encode(nfcKey, forKey: .nfcKey)
         try container.encode(recentTransactions, forKey: .recentTransactions)
     }
-
-    // Calcul âge/majeur (via BirthDate.calculateAge())
+    
     public var isAdult: Bool {
         birthDate.calculateAge() >= 18
     }
