@@ -21,8 +21,9 @@ public struct EROKID: Codable, Identifiable {
     public let nfcKey: String
     public let recentTransactions: [EROKTransaction]
     
-    // Nouveaux champs sécurité E-ROK ID
-    public let accessCodeHash: String? // Hash Argon2 du "E-ROK Access Code" (4 chiffres + 1 lettre)
+    // Sécurité E-ROK VIP Code
+    public let vipCodeHash: String? // Hash PBKDF2 du VIP Code (4 chiffres + 1 lettre)
+    public let vipCodeSalt: String? // Salt base64 (per-user)
     public let biometricsEnabled: Bool // Face ID/Touch ID activé
     
     // toDictionary pour écriture Firestore
@@ -41,12 +42,13 @@ public struct EROKID: Codable, Identifiable {
         if let erokPseudo = erokPseudo { dict["erokPseudo"] = erokPseudo }
         if let address = address { dict["address"] = address.toDictionary() }
         if let phoneNumber = phoneNumber { dict["phoneNumber"] = phoneNumber }
-        if let accessCodeHash = accessCodeHash { dict["accessCodeHash"] = accessCodeHash }
+        if let vipCodeHash = vipCodeHash { dict["vipCodeHash"] = vipCodeHash }
+        if let vipCodeSalt = vipCodeSalt { dict["vipCodeSalt"] = vipCodeSalt }
         return dict
     }
     
     public enum CodingKeys: String, CodingKey {
-        case id, email, firstName, lastName, erokPseudo, birthDate, address, phoneNumber, phoneVerified, nfcKey, recentTransactions, accessCodeHash, biometricsEnabled
+        case id, email, firstName, lastName, erokPseudo, birthDate, address, phoneNumber, phoneVerified, nfcKey, recentTransactions, vipCodeHash, vipCodeSalt, biometricsEnabled
     }
     
     public init(
@@ -61,7 +63,8 @@ public struct EROKID: Codable, Identifiable {
         phoneVerified: Bool = false,
         nfcKey: String = UUID().uuidString,
         recentTransactions: [EROKTransaction] = [],
-        accessCodeHash: String? = nil,
+        vipCodeHash: String? = nil,
+        vipCodeSalt: String? = nil,
         biometricsEnabled: Bool = true
     ) {
         guard !firstName.isEmpty, !lastName.isEmpty, !email.isEmpty else {
@@ -78,11 +81,12 @@ public struct EROKID: Codable, Identifiable {
         self.phoneVerified = phoneVerified
         self.nfcKey = nfcKey
         self.recentTransactions = recentTransactions
-        self.accessCodeHash = accessCodeHash
+        self.vipCodeHash = vipCodeHash
+        self.vipCodeSalt = vipCodeSalt
         self.biometricsEnabled = biometricsEnabled
     }
     
-    // Init from dictionary (Firestore) – corrigé avec JSONDecoder pour nested Codable
+    // Init from dictionary (Firestore) – JSONDecoder pour nested
     public init(from dictionary: [String: Any]) throws {
         guard let id = dictionary["id"] as? String,
               let email = dictionary["email"] as? String,
@@ -92,14 +96,12 @@ public struct EROKID: Codable, Identifiable {
             throw NSError(domain: "EROKID", code: -1, userInfo: [NSLocalizedDescriptionKey: "Champs obligatoires manquants"])
         }
         
-        // BirthDate
         guard let birthDateDict = dictionary["birthDate"] as? [String: Any] else {
             throw NSError(domain: "EROKID", code: -2, userInfo: [NSLocalizedDescriptionKey: "birthDate manquant"])
         }
         let birthDateData = try JSONSerialization.data(withJSONObject: birthDateDict)
         let birthDate = try JSONDecoder().decode(BirthDate.self, from: birthDateData)
         
-        // Address optionnel
         var address: Address? = nil
         if let addressDict = dictionary["address"] as? [String: Any] {
             let addressData = try JSONSerialization.data(withJSONObject: addressDict)
@@ -111,15 +113,14 @@ public struct EROKID: Codable, Identifiable {
         let nfcKey = dictionary["nfcKey"] as? String ?? UUID().uuidString
         let erokPseudo = dictionary["erokPseudo"] as? String
         
-        // recentTransactions
         let transactionsArray = dictionary["recentTransactions"] as? [[String: Any]] ?? []
         let recentTransactions = try transactionsArray.map { dict in
             let data = try JSONSerialization.data(withJSONObject: dict)
             return try JSONDecoder().decode(EROKTransaction.self, from: data)
         }
         
-        // Nouveaux champs
-        let accessCodeHash = dictionary["accessCodeHash"] as? String
+        let vipCodeHash = dictionary["vipCodeHash"] as? String
+        let vipCodeSalt = dictionary["vipCodeSalt"] as? String
         let biometricsEnabled = dictionary["biometricsEnabled"] as? Bool ?? true
         
         self.init(
@@ -134,7 +135,8 @@ public struct EROKID: Codable, Identifiable {
             phoneVerified: phoneVerified,
             nfcKey: nfcKey,
             recentTransactions: recentTransactions,
-            accessCodeHash: accessCodeHash,
+            vipCodeHash: vipCodeHash,
+            vipCodeSalt: vipCodeSalt,
             biometricsEnabled: biometricsEnabled
         )
     }
@@ -153,7 +155,8 @@ public struct EROKID: Codable, Identifiable {
         phoneVerified = try container.decode(Bool.self, forKey: .phoneVerified)
         nfcKey = try container.decode(String.self, forKey: .nfcKey)
         recentTransactions = try container.decode([EROKTransaction].self, forKey: .recentTransactions)
-        accessCodeHash = try container.decodeIfPresent(String.self, forKey: .accessCodeHash)
+        vipCodeHash = try container.decodeIfPresent(String.self, forKey: .vipCodeHash)
+        vipCodeSalt = try container.decodeIfPresent(String.self, forKey: .vipCodeSalt)
         biometricsEnabled = try container.decode(Bool.self, forKey: .biometricsEnabled)
     }
     
@@ -170,7 +173,8 @@ public struct EROKID: Codable, Identifiable {
         try container.encode(phoneVerified, forKey: .phoneVerified)
         try container.encode(nfcKey, forKey: .nfcKey)
         try container.encode(recentTransactions, forKey: .recentTransactions)
-        try container.encodeIfPresent(accessCodeHash, forKey: .accessCodeHash)
+        try container.encodeIfPresent(vipCodeHash, forKey: .vipCodeHash)
+        try container.encodeIfPresent(vipCodeSalt, forKey: .vipCodeSalt)
         try container.encode(biometricsEnabled, forKey: .biometricsEnabled)
     }
     
