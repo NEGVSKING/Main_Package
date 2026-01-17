@@ -22,8 +22,8 @@ public struct EROKID: Codable, Identifiable {
     public let recentTransactions: [EROKTransaction]
     
     // Sécurité E-ROK VIP Code
-    public let vipCodeHash: String? // Hash PBKDF2 du VIP Code (4 chiffres + 1 lettre)
-    public let vipCodeSalt: String? // Salt base64 (per-user)
+    public let vipCodeHash: String? // Hash HMAC-SHA256 du VIP Code
+    public let vipCodeSalt: String? // Salt base64
     public let biometricsEnabled: Bool // Face ID/Touch ID activé
     
     // toDictionary pour écriture Firestore
