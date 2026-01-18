@@ -21,10 +21,10 @@ public struct EROKID: Codable, Identifiable {
     public let nfcKey: String
     public let recentTransactions: [EROKTransaction]
     
-    // Sécurité E-ROK VIP Code
-    public let vipCodeHash: String? // Hash HMAC-SHA256 du VIP Code
-    public let vipCodeSalt: String? // Salt base64
-    public let biometricsEnabled: Bool // Face ID/Touch ID activé
+    // Sécurité E-ROK VIP Code (ajoutés)
+    public let vipCodeHash: String?
+    public let vipCodeSalt: String?
+    public let biometricsEnabled: Bool
     
     // toDictionary pour écriture Firestore
     public func toDictionary() -> [String: Any] {
@@ -86,7 +86,7 @@ public struct EROKID: Codable, Identifiable {
         self.biometricsEnabled = biometricsEnabled
     }
     
-    // Init from dictionary (Firestore) – JSONDecoder pour nested
+    // Init from dictionary (Firestore)
     public init(from dictionary: [String: Any]) throws {
         guard let id = dictionary["id"] as? String,
               let email = dictionary["email"] as? String,
@@ -157,7 +157,7 @@ public struct EROKID: Codable, Identifiable {
         recentTransactions = try container.decode([EROKTransaction].self, forKey: .recentTransactions)
         vipCodeHash = try container.decodeIfPresent(String.self, forKey: .vipCodeHash)
         vipCodeSalt = try container.decodeIfPresent(String.self, forKey: .vipCodeSalt)
-        biometricsEnabled = try container.decode(Bool.self, forKey: .biometricsEnabled)
+        biometricsEnabled = try container.decodeIfPresent(Bool.self, forKey: .biometricsEnabled) ?? true
     }
     
     public func encode(to encoder: Encoder) throws {
