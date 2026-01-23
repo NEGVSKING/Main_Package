@@ -1,18 +1,16 @@
 //
-//  MainTabView.swift
-//  E-ROK-Package
-//
-//  Created by Fabien Koré on 10/01/2026.
-//
+// MainTabView.swift
+// E-ROK-Package
 
 import SwiftUI
-import EROKUI // Pour TabBarView, TabModel ET TabBarVisibilityPreference
+import EROKUI
 
 public struct MainTabView: View {
     public let tabs: [TabModel]
     public let views: [AnyView]
     public let textColor: Color
     public let buttonColor: Color
+    
     @State private var selectedTab = 0
     @State private var isTabBarVisible = true
 
@@ -39,29 +37,28 @@ public struct MainTabView: View {
                 }
                 .offset(x: -geo.size.width * CGFloat(selectedTab))
             }
-            .background(Color("BackgroundColor"))
-
-            VStack {
-                Spacer()
-                
-                if isTabBarVisible {
+            .ignoresSafeArea(edges: .top)
+            
+            // ✅ TabBar conditionnelle avec animation
+            if isTabBarVisible {
+                VStack {
+                    Spacer()
                     TabBarView(
                         tabs: tabs,
                         selectedTab: $selectedTab,
                         textColor: textColor,
                         buttonColor: buttonColor
                     )
+                    .padding(.bottom, 8)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }
         }
-        // ✅ CORRECTION : Spécifier explicitement le type de PreferenceKey
-        .onPreferenceChange(TabBarVisibilityPreference.self) { (newValue: Bool) in
-            withAnimation(.easeInOut(duration: 0.3)) {
-                isTabBarVisible = newValue
+        .onPreferenceChange(TabBarVisibilityPreference.self) { visible in
+            withAnimation(.easeInOut(duration: 0.25)) {
+                isTabBarVisible = visible
             }
         }
-        .environment(\.isTabBarVisible, $isTabBarVisible)
     }
 }
 
