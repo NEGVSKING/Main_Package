@@ -1,31 +1,21 @@
-// Sources/EROKViews/MainTabView.swift
+//
+//  MainTabView.swift
+//  E-ROK-Package
+//
+//  Created by Fabien Koré on 10/01/2026.
+//
+
 import SwiftUI
-import EROKUI // Pour TabBarView et TabModel
+import EROKUI // Pour TabBarView, TabModel ET TabBarVisibilityPreference
 
 public struct MainTabView: View {
     public let tabs: [TabModel]
     public let views: [AnyView]
-    
-    // ✅ Bindings pour couleurs réactives
-    @Binding public var textColor: Color
-    @Binding public var buttonColor: Color
-    
+    public let textColor: Color
+    public let buttonColor: Color
     @State private var selectedTab = 0
+    @State private var isTabBarVisible = true
 
-    // ✅ Initializer avec Bindings
-    public init(
-        tabs: [TabModel],
-        views: [AnyView],
-        textColor: Binding<Color>,
-        buttonColor: Binding<Color>
-    ) {
-        self.tabs = tabs
-        self.views = views
-        self._textColor = textColor
-        self._buttonColor = buttonColor
-    }
-    
-    // ✅ Convenience initializer pour couleurs statiques (backward compatibility)
     public init(
         tabs: [TabModel],
         views: [AnyView],
@@ -34,8 +24,8 @@ public struct MainTabView: View {
     ) {
         self.tabs = tabs
         self.views = views
-        self._textColor = .constant(textColor)
-        self._buttonColor = .constant(buttonColor)
+        self.textColor = textColor
+        self.buttonColor = buttonColor
     }
 
     public var body: some View {
@@ -53,13 +43,29 @@ public struct MainTabView: View {
 
             VStack {
                 Spacer()
-                TabBarView(tabs: tabs, selectedTab: $selectedTab, textColor: textColor, buttonColor: buttonColor)
+                
+                if isTabBarVisible {
+                    TabBarView(
+                        tabs: tabs,
+                        selectedTab: $selectedTab,
+                        textColor: textColor,
+                        buttonColor: buttonColor
+                    )
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
             }
         }
+        // ✅ CORRECTION : Spécifier explicitement le type de PreferenceKey
+        .onPreferenceChange(TabBarVisibilityPreference.self) { (newValue: Bool) in
+            withAnimation(.easeInOut(duration: 0.3)) {
+                isTabBarVisible = newValue
+            }
+        }
+        .environment(\.isTabBarVisible, $isTabBarVisible)
     }
 }
 
-#Preview("Couleurs statiques") {
+#Preview {
     MainTabView(
         tabs: [
             TabModel(icon: "house", title: "Home"),
@@ -76,71 +82,4 @@ public struct MainTabView: View {
         textColor: .white,
         buttonColor: .black
     )
-}
-
-#Preview("Couleurs dynamiques") {
-    struct DynamicPreview: View {
-        @State private var textColor: Color = .white
-        @State private var buttonColor: Color = .black
-        
-        var body: some View {
-            VStack {
-                MainTabView(
-                    tabs: [
-                        TabModel(icon: "house", title: "Home"),
-                        TabModel(icon: "person", title: "Profil"),
-                        TabModel(icon: "creditcard", title: "Wallet"),
-                        TabModel(icon: "gearshape", title: "Réglages")
-                    ],
-                    views: [
-                        AnyView(Text("Home View")),
-                        AnyView(Text("Profile View")),
-                        AnyView(Text("Wallet View")),
-                        AnyView(Text("Settings View"))
-                    ],
-                    textColor: $textColor,
-                    buttonColor: $buttonColor
-                )
-                
-                // Boutons pour tester le changement de couleurs
-                HStack(spacing: 16) {
-                    Button("Blanc/Noir") {
-                        withAnimation {
-                            textColor = .white
-                            buttonColor = .black
-                        }
-                    }
-                    .padding()
-                    .background(Color.black)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-                    
-                    Button("Rouge/Rose") {
-                        withAnimation {
-                            textColor = .white
-                            buttonColor = .red
-                        }
-                    }
-                    .padding()
-                    .background(Color.red)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-                    
-                    Button("Vert/Noir") {
-                        withAnimation {
-                            textColor = .black
-                            buttonColor = .green
-                        }
-                    }
-                    .padding()
-                    .background(Color.green)
-                    .foregroundColor(.black)
-                    .cornerRadius(8)
-                }
-                .padding()
-            }
-        }
-    }
-    
-    return DynamicPreview()
 }
