@@ -86,8 +86,13 @@ public struct Validation {
         return isLongEnough && hasUppercase && hasLowercase && hasSpecialChar
     }
     
-    // Vérifier si l'utilisateur a au moins 15 ans
-    public static func isAtLeast15YearsOld(_ birthDate: BirthDate) -> Bool {
+    // ✅ NOUVELLE FONCTION GÉNÉRIQUE - Vérifier âge minimum personnalisable
+    /// Vérifie si l'utilisateur a au moins l'âge minimum requis
+    /// - Parameters:
+    ///   - birthDate: Date de naissance de l'utilisateur
+    ///   - minimumAge: Âge minimum requis (ex: 12, 16, 18)
+    /// - Returns: `true` si l'utilisateur a l'âge minimum, `false` sinon
+    public static func isAtLeastAge(_ birthDate: BirthDate, minimumAge: Int) -> Bool {
         let currentDate = Date()
         let calendar = Calendar.current
         let currentYear = calendar.component(.year, from: currentDate)
@@ -101,29 +106,51 @@ public struct Validation {
         let age = currentYear - birthYear
         let hasHadBirthdayThisYear = (birthMonth < currentMonth) || (birthMonth == currentMonth && birthDay <= currentDay)
         let actualAge = hasHadBirthdayThisYear ? age : age - 1
-        return actualAge >= 15
+        return actualAge >= minimumAge
     }
     
-    // Nouvelle validation : Vérifier que le mot de passe et la confirmation concordent
+    // ✅ RACCOURCIS POUR ÂGES COURANTS
+    
+    /// Vérifie si l'utilisateur a au moins 12 ans (E-ROK ID minimum)
+    public static func isAtLeast12YearsOld(_ birthDate: BirthDate) -> Bool {
+        return isAtLeastAge(birthDate, minimumAge: 12)
+    }
+    
+    /// Vérifie si l'utilisateur a au moins 15 ans (ancienne fonction conservée)
+    public static func isAtLeast15YearsOld(_ birthDate: BirthDate) -> Bool {
+        return isAtLeastAge(birthDate, minimumAge: 15)
+    }
+    
+    /// Vérifie si l'utilisateur a au moins 16 ans (MYMECA, permis de conduire)
+    public static func isAtLeast16YearsOld(_ birthDate: BirthDate) -> Bool {
+        return isAtLeastAge(birthDate, minimumAge: 16)
+    }
+    
+    /// Vérifie si l'utilisateur a au moins 18 ans (SHIFT, majorité légale)
+    public static func isAtLeast18YearsOld(_ birthDate: BirthDate) -> Bool {
+        return isAtLeastAge(birthDate, minimumAge: 18)
+    }
+    
+    // Vérifier que le mot de passe et la confirmation concordent
     public static func isPasswordMatching(_ password: String, _ confirmPassword: String) -> Bool {
         return password == confirmPassword
     }
     
-    // Nouvelle validation : Vérifier une ville (lettres, accents, espaces, -, pas de chiffres)
+    // Vérifier une ville (lettres, accents, espaces, -, pas de chiffres)
     public static func isValidCity(_ city: String) -> Bool {
         let cityRegex = "^[a-zA-ZàáâãäåçèéêëìíîïòóôõöùúûüýÿÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝŸ -]+$"
         let predicate = NSPredicate(format: "SELF MATCHES %@", cityRegex)
         return predicate.evaluate(with: city)
     }
     
-    // Nouvelle validation : Vérifier un code postal (5 chiffres pour un format simplifié)
+    // Vérifier un code postal (5 chiffres pour un format simplifié)
     public static func isValidPostalCode(_ postalCode: String) -> Bool {
         let postalCodeRegex = "^[0-9]{5}$"
         let predicate = NSPredicate(format: "SELF MATCHES %@", postalCodeRegex)
         return predicate.evaluate(with: postalCode)
     }
     
-    // Nouvelle validation : Vérifier un numéro de rue (entier positif ou alphanumérique simple, ex. "12", "12A")
+    // Vérifier un numéro de rue (entier positif ou alphanumérique simple, ex. "12", "12A")
     public static func isValidStreetNumber(_ streetNumber: String) -> Bool {
         let streetNumberRegex = "^[0-9]+[A-Za-z]?$"
         let predicate = NSPredicate(format: "SELF MATCHES %@", streetNumberRegex)
