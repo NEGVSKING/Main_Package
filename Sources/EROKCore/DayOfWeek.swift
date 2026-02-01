@@ -5,12 +5,6 @@
 //  Created by Fabien Koré on 27/09/2025.
 //
 
-
-// Sources/MYMECA/DayOfWeek.swift
-// E-ROK-Package
-//
-// Created by Fabien Koré on 26/03/2025.
-
 import Foundation
 
 public enum DayOfWeek: String, Codable, CaseIterable, Identifiable {
@@ -25,9 +19,10 @@ public enum DayOfWeek: String, Codable, CaseIterable, Identifiable {
     public var id: String { rawValue }
 }
 
+// ✅ CORRECTION : Rendre l'extension publique
 extension DayOfWeek {
     /// ✅ Convertir Date → DayOfWeek
-    static func from(date: Date) -> DayOfWeek? {
+    public static func from(date: Date) -> DayOfWeek? {  // ← AJOUT "public"
         let calendar = Calendar.current
         let weekday = calendar.component(.weekday, from: date)
         
