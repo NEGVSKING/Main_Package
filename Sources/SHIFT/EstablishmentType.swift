@@ -88,93 +88,192 @@ public enum EstablishmentType: String, Codable, CaseIterable, Identifiable {
     
     public var displayName: String {
         switch self {
-        case .bar: return "Bar"
-        case .nightClub: return "Boîte de nuit"
-        case .receptionHall: return "Salle de réception"
-        case .homeParty: return "Home party"
-        case .restaurant: return "Restaurant"
-        case .privateClub: return "Club privé"
-        case .festival: return "Festival"
-        case .barRestaurant: return "Bar restaurant"
-        case .dancingBar: return "Bar dansant"
-        case .multiRoomClub: return "Club multi-salles"
-        case .lounge: return "Lounge"
-        case .rooftop: return "Rooftop"
-        case .beachClub: return "Beach club"
-        case .karaokeBar: return "Karaoke bar"
-        case .liveMusicVenue: return "Salle de musique live"
-        case .concertHall: return "Salle de concert"
-        case .sportsBar: return "Sports bar"
-        case .wineBar: return "Bar à vin"
-        case .brewery: return "Brasserie"
-        case .eventVenue: return "Lieu événementiel"
-        case .poolClub: return "Pool Club"
-        case .speakeasy: return "Speakeasy"
-        case .jazzClub: return "Club de jazz"
-        case .comedyClub: return "Club de comédie"
-        case .cigarLounge: return "Salon à cigares"
-        case .hookahLounge: return "Salon à chicha"
-        case .diveBar: return "Bar populaire"
-        case .gastropub: return "Gastropub"
-        case .cocktailBar: return "Bar à cocktails"
-        case .tikiBar: return "Bar tiki"
-        case .rooftopBar: return "Bar sur le toit"
-        case .beachResort: return "Resort de plage"
-        case .yachtClub: return "Club nautique"
-        case .casino: return "Casino"
-        case .danceStudio: return "Studio de danse"
-        case .artGallery: return "Galerie d'art"
-        case .popUpVenue: return "Lieu pop-up"
-        case .rooftopLounge: return "Lounge sur le toit"
-        case .terraceBar: return "Bar en terrasse"
-        case .rooftopRestaurant: return "Restaurant sur le toit"
-        case .outdoorVenue: return "Lieu en plein air"
-        case .vineyard: return "Vignoble"
-        case .distillery: return "Distillerie"
-        case .taproom: return "Taproom"
-        case .pianoBar: return "Piano bar"
-        case .bluesClub: return "Club de blues"
-        case .rockClub: return "Club de rock"
-        case .hipHopClub: return "Club hip-hop"
-        case .latinClub: return "Club latino"
-        case .salsaClub: return "Club de salsa"
-        case .reggaeClub: return "Club reggae"
-        case .edmClub: return "Club EDM"
-        case .technoClub: return "Club techno"
-        case .houseClub: return "Club house"
-        case .arcadeBar: return "Bar d'arcade"
-        case .gameRoom: return "Salle de jeux"
-        case .bowlingAlley: return "Bowling"
-        case .poolHall: return "Salle de billard"
-        case .cabaret: return "Cabaret"
-        case .burlesqueVenue: return "Lieu de burlesque"
-        case .supperClub: return "Supper club"
-        case .rooftopPoolClub: return "Club de piscine sur le toit"
-        case .beachBar: return "Bar de plage"
-        case .tropicalBar: return "Bar tropical"
-        case .rooftopNightClub: return "Boîte de nuit sur le toit"
-        case .speakeasyLounge: return "Lounge speakeasy"
-        case .culturalCenter: return "Centre culturel"
-        case .rooftopEventSpace: return "Espace événementiel sur le toit"
-        case .openAirClub: return "Club en plein air"
-        case .rooftopTerrace: return "Terrasse sur le toit"
-        case .boutiqueHotelBar: return "Bar d'hôtel boutique"
-        case .microbrewery: return "Microbrasserie"
-        case .themedBar: return "Bar à thème"
-        case .speakeasyCocktailBar: return "Bar à cocktails speakeasy"
-        case .urbanLounge: return "Lounge urbain"
-        case .rooftopBrewery: return "Brasserie sur le toit"
-        case .boatVenue: return "Lieu sur bateau"
+        case .bar:                      return "Bar"
+        case .nightClub:                return "Boîte de nuit"
+        case .receptionHall:            return "Salle de réception"
+        case .homeParty:                return "Home party"
+        case .restaurant:               return "Restaurant"
+        case .privateClub:              return "Club privé"
+        case .festival:                 return "Festival"
+        case .barRestaurant:            return "Bar restaurant"
+        case .dancingBar:               return "Bar dansant"
+        case .multiRoomClub:            return "Club multi-salles"
+        case .lounge:                   return "Lounge"
+        case .rooftop:                  return "Rooftop"
+        case .beachClub:                return "Beach club"
+        case .karaokeBar:               return "Karaoke bar"
+        case .liveMusicVenue:           return "Salle de musique live"
+        case .concertHall:              return "Salle de concert"
+        case .sportsBar:                return "Sports bar"
+        case .wineBar:                  return "Bar à vin"
+        case .brewery:                  return "Brasserie"
+        case .eventVenue:               return "Lieu événementiel"
+        case .poolClub:                 return "Pool Club"
+        case .speakeasy:                return "Speakeasy"
+        case .jazzClub:                 return "Club de jazz"
+        case .comedyClub:               return "Club de comédie"
+        case .cigarLounge:              return "Salon à cigares"
+        case .hookahLounge:             return "Salon à chicha"
+        case .diveBar:                  return "Bar populaire"
+        case .gastropub:                return "Gastropub"
+        case .cocktailBar:              return "Bar à cocktails"
+        case .tikiBar:                  return "Bar tiki"
+        case .rooftopBar:               return "Bar sur le toit"
+        case .beachResort:              return "Resort de plage"
+        case .yachtClub:                return "Club nautique"
+        case .casino:                   return "Casino"
+        case .danceStudio:              return "Studio de danse"
+        case .artGallery:               return "Galerie d'art"
+        case .popUpVenue:               return "Lieu pop-up"
+        case .rooftopLounge:            return "Lounge sur le toit"
+        case .terraceBar:               return "Bar en terrasse"
+        case .rooftopRestaurant:        return "Restaurant sur le toit"
+        case .outdoorVenue:             return "Lieu en plein air"
+        case .vineyard:                 return "Vignoble"
+        case .distillery:               return "Distillerie"
+        case .taproom:                  return "Taproom"
+        case .pianoBar:                 return "Piano bar"
+        case .bluesClub:                return "Club de blues"
+        case .rockClub:                 return "Club de rock"
+        case .hipHopClub:               return "Club hip-hop"
+        case .latinClub:                return "Club latino"
+        case .salsaClub:                return "Club de salsa"
+        case .reggaeClub:               return "Club reggae"
+        case .edmClub:                  return "Club EDM"
+        case .technoClub:               return "Club techno"
+        case .houseClub:                return "Club house"
+        case .arcadeBar:                return "Bar d'arcade"
+        case .gameRoom:                 return "Salle de jeux"
+        case .bowlingAlley:             return "Bowling"
+        case .poolHall:                 return "Salle de billard"
+        case .cabaret:                  return "Cabaret"
+        case .burlesqueVenue:           return "Lieu de burlesque"
+        case .supperClub:               return "Supper club"
+        case .rooftopPoolClub:          return "Club de piscine sur le toit"
+        case .beachBar:                 return "Bar de plage"
+        case .tropicalBar:              return "Bar tropical"
+        case .rooftopNightClub:         return "Boîte de nuit sur le toit"
+        case .speakeasyLounge:          return "Lounge speakeasy"
+        case .culturalCenter:           return "Centre culturel"
+        case .rooftopEventSpace:        return "Espace événementiel sur le toit"
+        case .openAirClub:              return "Club en plein air"
+        case .rooftopTerrace:           return "Terrasse sur le toit"
+        case .boutiqueHotelBar:         return "Bar d'hôtel boutique"
+        case .microbrewery:             return "Microbrasserie"
+        case .themedBar:                return "Bar à thème"
+        case .speakeasyCocktailBar:     return "Bar à cocktails speakeasy"
+        case .urbanLounge:              return "Lounge urbain"
+        case .rooftopBrewery:           return "Brasserie sur le toit"
+        case .boatVenue:                return "Lieu sur bateau"
         }
-        
-       
     }
+    
     public var isFeminine: Bool {
         switch self {
-        case .nightClub, .receptionHall, .liveMusicVenue, .concertHall, .gameRoom, .poolHall, .rooftopTerrace, .artGallery, .rooftopNightClub:
-            return true // Féminin : "une Boîte de nuit", "une Salle de réception", etc.
+        case .nightClub, .receptionHall, .liveMusicVenue, .concertHall,
+             .gameRoom, .poolHall, .rooftopTerrace, .artGallery, .rooftopNightClub:
+            return true
         default:
-            return false // Masculin : "un Bar", "un Restaurant", etc.
+            return false
+        }
+    }
+    
+    // ────────────────────────────────────────────────
+    // Image textuelle overlay (exhaustive - plus d'erreur)
+    // ────────────────────────────────────────────────
+    public var textOverlayImageName: String {
+        switch self {
+        // Boîtes de nuit & assimilées
+        case .nightClub,
+             .multiRoomClub,
+             .rooftopNightClub,
+             .openAirClub:
+            return "E-ROK_NIGHTCLUB_TEXT"
+            
+        // Clubs (privé, jazz, hip-hop, EDM, etc.)
+        case .privateClub,
+             .jazzClub,
+             .comedyClub,
+             .bluesClub,
+             .rockClub,
+             .hipHopClub,
+             .latinClub,
+             .salsaClub,
+             .reggaeClub,
+             .edmClub,
+             .technoClub,
+             .houseClub,
+             .beachClub,
+             .poolClub,
+             .rooftopPoolClub:
+            return "E-ROK_CLUB_TEXT"
+            
+        // Bars & lounge (tous les lounge sont bars comme demandé)
+        case .bar,
+             .barRestaurant,
+             .dancingBar,
+             .karaokeBar,
+             .sportsBar,
+             .wineBar,
+             .cocktailBar,
+             .tikiBar,
+             .rooftopBar,
+             .terraceBar,
+             .beachBar,
+             .tropicalBar,
+             .gastropub,
+             .pianoBar,
+             .arcadeBar,
+             .themedBar,
+             .speakeasyCocktailBar,
+             .boutiqueHotelBar,
+             .microbrewery,
+             .taproom,
+             .brewery,
+             .rooftopBrewery,
+             // ── TOUS LES LOUNGE ──
+             .lounge,
+             .rooftopLounge,
+             .speakeasyLounge,
+             .urbanLounge,
+             .cigarLounge,
+             .hookahLounge,
+             .speakeasy:
+            return "E-ROK_BAR_TEXT"
+            
+        // Lieux / salles / espaces événementiels / autres
+        case .receptionHall,
+             .festival,
+             .eventVenue,
+             .liveMusicVenue,
+             .concertHall,
+             .culturalCenter,
+             .rooftopEventSpace,
+             .outdoorVenue,
+             .popUpVenue,
+             .boatVenue,
+             .beachResort,
+             .yachtClub,
+             .casino,
+             .danceStudio,
+             .artGallery,
+             .rooftop,
+             .rooftopRestaurant,
+             .rooftopTerrace,
+             .supperClub,
+             .cabaret,
+             .burlesqueVenue,
+             .homeParty,
+             .vineyard,
+             .distillery,
+             .gameRoom,
+             .bowlingAlley,
+             .poolHall:
+            return "E-ROK_LIEU_TEXT"
+        case .restaurant:
+            return "E-ROK_LIEU_TEXT"
+        case .diveBar:
+            return "E-ROK_LIEU_TEXT"
         }
     }
 }
