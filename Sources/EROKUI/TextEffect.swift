@@ -83,20 +83,35 @@ public struct HomeHackerTextEffectView: View {
 
 public struct TextEffect: View {
     
-    //Config
-    public var text: String
-    public var trigger: Bool
-    public var transition: ContentTransition = .numericText()
-    public var duration: CGFloat = 1.0
-    public var speed: CGFloat = 0.1
+    // Config
+    public let text: String
+    public let trigger: Bool
+    public let transition: ContentTransition
+    public let duration: CGFloat
+    public let speed: CGFloat
     
-    //view props
+    // view props
     @State public var animatedText: String = ""
     @State public var randomCharacters: [Character] = {
         let string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
         return Array(string)
     }()
     @State private var animationID: String = UUID().uuidString
+    
+    // Initialiseur public explicite (obligatoire pour utilisation depuis un autre module)
+    public init(
+        text: String,
+        trigger: Bool,
+        transition: ContentTransition = .numericText(),
+        duration: CGFloat = 1.0,
+        speed: CGFloat = 0.1
+    ) {
+        self.text = text
+        self.trigger = trigger
+        self.transition = transition
+        self.duration = duration
+        self.speed = speed
+    }
     
     public var body: some View {
         Text(animatedText)
