@@ -88,14 +88,14 @@ struct HomeHackerTextEffectView: View {
     }
 }
 
-struct TextEffect: View {
+public struct TextEffect: View {
     
     //Config
-    var text: String
-    var trigger: Bool
-    var transition: ContentTransition = .numericText()
-    var duration: CGFloat = 1.0
-    var speed: CGFloat = 0.1
+    public var text: String
+    public var trigger: Bool
+    public var transition: ContentTransition = .numericText()
+    public var duration: CGFloat = 1.0
+    public var speed: CGFloat = 0.1
     //view props
     @State private var animatedText: String = ""
     @State private var randomCharacters: [Character] = {
@@ -104,7 +104,7 @@ struct TextEffect: View {
     }()
     @State private var animationID: String = UUID().uuidString
     
-    var body: some View {
+    public var body: some View {
         Text(animatedText)
             .fontDesign(.monospaced)
             .truncationMode(.tail)
