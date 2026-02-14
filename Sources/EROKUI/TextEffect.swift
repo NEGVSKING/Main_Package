@@ -15,12 +15,12 @@
 
 import SwiftUI
 
-fileprivate enum TransitionType: String, Identifiable, CaseIterable {
+public  enum TransitionType: String, Identifiable, CaseIterable {
     case interpolate
     case identity
     case numericText
     
-    var id: String { self.rawValue }
+    public var id: String { self.rawValue }
     
     // Map TransitionType to ContentTransition
     var contentTransition: ContentTransition {
@@ -34,13 +34,13 @@ fileprivate enum TransitionType: String, Identifiable, CaseIterable {
         }
     }
 }
-struct HomeHackerTextEffectView: View {
+public struct HomeHackerTextEffectView: View {
     
-    @State private var text: String = "Hello world!"
-    @State private var trigger: Bool = false
-    @State private var selectedTransition: TransitionType = .interpolate
+    @State public  var text: String = "Hello world!"
+    @State public  var trigger: Bool = false
+    @State public  var selectedTransition: TransitionType = .interpolate
     
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 12){
             Spacer()
             
