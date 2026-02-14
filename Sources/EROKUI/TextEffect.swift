@@ -5,17 +5,9 @@
 //  Created by Fabien Koré on 31/01/2026.
 //
 
-
-//
-//  HackerTextEffectView.swift
-//  IOS17-Swift
-//
-//  Created by xqsadness on 30/05/2024.
-//
-
 import SwiftUI
 
-public  enum TransitionType: String, Identifiable, CaseIterable {
+public enum TransitionType: String, Identifiable, CaseIterable {
     case interpolate
     case identity
     case numericText
@@ -23,7 +15,7 @@ public  enum TransitionType: String, Identifiable, CaseIterable {
     public var id: String { self.rawValue }
     
     // Map TransitionType to ContentTransition
-    var contentTransition: ContentTransition {
+    public var contentTransition: ContentTransition {
         switch self {
         case .interpolate:
             return .interpolate
@@ -34,11 +26,12 @@ public  enum TransitionType: String, Identifiable, CaseIterable {
         }
     }
 }
+
 public struct HomeHackerTextEffectView: View {
     
-    @State public  var text: String = "Hello world!"
-    @State public  var trigger: Bool = false
-    @State public  var selectedTransition: TransitionType = .interpolate
+    @State public var text: String = "Hello world!"
+    @State public var trigger: Bool = false
+    @State public var selectedTransition: TransitionType = .interpolate
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 12){
@@ -72,7 +65,7 @@ public struct HomeHackerTextEffectView: View {
                     text = "900"
                 }
                 trigger.toggle()
-            }label: {
+            } label: {
                 Text("Trigger")
                     .fontWeight(.semibold)
                     .padding(.horizontal, 15)
@@ -96,9 +89,10 @@ public struct TextEffect: View {
     public var transition: ContentTransition = .numericText()
     public var duration: CGFloat = 1.0
     public var speed: CGFloat = 0.1
+    
     //view props
-    @State private var animatedText: String = ""
-    @State private var randomCharacters: [Character] = {
+    @State public var animatedText: String = ""
+    @State public var randomCharacters: [Character] = {
         let string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
         return Array(string)
     }()
@@ -126,7 +120,7 @@ public struct TextEffect: View {
             }
     }
     
-    private func animateText(){
+    public func animateText(){
         let currentID = animationID
         for index in text.indices{
             let delay = CGFloat.random(in: 0...duration)
@@ -152,7 +146,7 @@ public struct TextEffect: View {
         }
     }
     
-    private func setRandomCharacter(){
+    public func setRandomCharacter(){
         animatedText = text
         for index in animatedText.indices{
             guard let randomCharacter = randomCharacters.randomElement() else { return }
@@ -171,15 +165,15 @@ public struct TextEffect: View {
     }
 }
 
-fileprivate extension View{
+extension View {
     @ViewBuilder
-    func customOnchange<T: Equatable>(value: T, result: @escaping (T) -> ()) -> some View{
-        if #available(iOS 17, *){
+    func customOnchange<T: Equatable>(value: T, result: @escaping (T) -> ()) -> some View {
+        if #available(iOS 17, *) {
             self
                 .onChange(of: value) { oldValue, newValue in
                     result(newValue)
                 }
-        }else{
+        } else {
             self
                 .onChange(of: value) { value in
                     result(value)
