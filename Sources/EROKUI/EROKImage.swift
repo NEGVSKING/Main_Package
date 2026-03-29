@@ -17,7 +17,7 @@ public struct EROKImage: View {
     }
 
     public var body: some View {
-        Image(imageName, bundle: .main)
+        Image(imageName, bundle: .module)
             .resizable()
             .scaledToFit()
     }
