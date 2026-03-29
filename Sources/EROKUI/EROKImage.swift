@@ -8,6 +8,7 @@
 
 
 import SwiftUI
+import UIKit
 
 public struct EROKImage: View {
     let imageName: String
@@ -17,13 +18,25 @@ public struct EROKImage: View {
     }
 
     public var body: some View {
-        Image(imageName, bundle: .module)
-            .resizable()
-            .scaledToFit()
+        if let uiImage = UIImage(named: imageName, in: .module, with: nil) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFit()
+        } else if let path = Bundle.module.path(forResource: imageName, ofType: "png"),
+                  let uiImage = UIImage(contentsOfFile: path) {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFit()
+        } else {
+            Image(systemName: "photo.badge.exclamationmark")
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(.red)
+        }
     }
 }
 
 #Preview {
     EROKImage(imageName: "E-ROK_CLUB_TEXT")
-        .frame(width: 300, height: 300)
+        .frame(width: 500, height: 500)
 }
