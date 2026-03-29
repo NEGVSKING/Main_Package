@@ -39,49 +39,41 @@ public struct InfoFields: View {
     
     public var body: some View {
         ZStack(alignment: .leading) {
-            switch type {
-            case .password, .oldPassword, .confirmPassword:
-                SecureField("", text: $text)
-                    .padding(.leading)
-                    .frame(minHeight: 56)
-                    .focused($isTyping)
-                    .keyboardType(.default)
-                    .textContentType(type.textContentType)
-                    .submitLabel(type.submitLabel)
-                    .foregroundStyle(typedTextColor ?? .black)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(isTyping ? (focusColor ?? .blue) : (textColor ?? .gray), lineWidth: 2)
-                    )
-            case .firstName, .lastName, .phoneNumber, .streetNumber, .streetAddress, .ville, .postalCode, .pseudo, .email, .generic:
-                TextField("", text: $text)
-                    .padding(.leading)
-                    .frame(minHeight: 56)
-                    .focused($isTyping)
-                    .keyboardType(type.keyboardType)
-                    .textContentType(type.textContentType)
-                    .submitLabel(type.submitLabel)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    .foregroundStyle(typedTextColor ?? .black)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(isTyping ? (focusColor ?? .blue) : (textColor ?? .gray), lineWidth: 2)
-                    )
+            Group {
+                switch type {
+                case .password, .oldPassword, .confirmPassword:
+                    SecureField("", text: $text)
+                        .keyboardType(.default)
+                        .textContentType(type.textContentType)
+                case .firstName, .lastName, .phoneNumber, .streetNumber, .streetAddress, .ville, .postalCode, .pseudo, .email, .generic:
+                    TextField("", text: $text)
+                        .keyboardType(type.keyboardType)
+                        .textContentType(type.textContentType)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled(true)
+                }
             }
+            .submitLabel(type.submitLabel)
+            .padding(.horizontal, 16)
+            .frame(minHeight: 56)
+            .focused($isTyping)
+            .foregroundStyle(typedTextColor ?? .primary)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(isTyping ? (focusColor ?? .blue) : (textColor ?? .gray.opacity(0.8)), lineWidth: isTyping ? 2 : 1)
+                    .shadow(color: isTyping ? (focusColor ?? .blue).opacity(0.25) : .clear, radius: 8, x: 0, y: 0)
+            )
             
             Text(type.displayName)
-                .padding(.horizontal, 8)
-                .background(
-                    Color.white
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
-                        .opacity(isTyping || !text.isEmpty ? 1 : 0)
-                )
+                .font(.system(size: isTyping || !text.isEmpty ? 13 : 16, weight: isTyping ? .semibold : .regular))
+                .padding(.horizontal, 6)
+                .background(Color(uiColor: .systemBackground))
                 .foregroundStyle(isTyping ? (focusColor ?? .blue) : (textColor ?? .gray))
-                .padding(.leading)
+                .padding(.leading, 12)
                 .offset(y: isTyping || !text.isEmpty ? -28 : 0)
         }
-        .animation(.linear(duration: 0.2), value: isTyping)
+        .animation(.spring(response: 0.35, dampingFraction: 0.75), value: isTyping)
+        .animation(.spring(response: 0.35, dampingFraction: 0.75), value: text.isEmpty)
         .padding(.horizontal, 16)
     }
 }
