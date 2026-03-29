@@ -79,15 +79,15 @@ public struct CorrectButton: View {
                         .transition(.scale.combined(with: .opacity))
                     }
                 }
-                .frame(width: 200, height: alterState ? 200 : 60)
+                .frame(width: alterState ? 200 : (isLoading ? 60 : 200), height: alterState ? 200 : 60)
                 .background(
                     ZStack {
                         Color.gray.opacity(0.1)
-                        RoundedRectangle(cornerRadius: alterState ? 60 : 12, style: .continuous)
+                        RoundedRectangle(cornerRadius: alterState ? 100 : (isLoading ? 30 : 12), style: .continuous)
                             .foregroundStyle(backgroundColor)
                             .blur(radius: 3)
                             .offset(x: -2, y: -2)
-                        RoundedRectangle(cornerRadius: alterState ? 60 : 12, style: .continuous)
+                        RoundedRectangle(cornerRadius: alterState ? 100 : (isLoading ? 30 : 12), style: .continuous)
                             .fill(
                                 alterState ?
                                     LinearGradient(
@@ -106,7 +106,7 @@ public struct CorrectButton: View {
                             .offset(x: 3, y: 3)
                     }
                 )
-                .clipShape(RoundedRectangle(cornerRadius: alterState ? 60 : 12, style: .continuous))
+                .clipShape(RoundedRectangle(cornerRadius: alterState ? 100 : (isLoading ? 30 : 12), style: .continuous))
                 .shadow(color: isLoading ? textColor.opacity(0.3) : .clear, radius: 8)
                 .shadow(
                     color: alterState ? .clear :
