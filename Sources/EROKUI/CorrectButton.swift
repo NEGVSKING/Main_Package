@@ -23,6 +23,7 @@ public struct CorrectButton: View {
     @State private var isLoading = false
     @State private var alterState = false
     @State private var longPressTask: Task<Void, Never>? = nil
+    @State private var rotation: Double = 0
 
     public init(
         textColor: Color = .blue,
@@ -59,9 +60,23 @@ public struct CorrectButton: View {
                 .opacity(isLoading ? 0 : 1)
                 .overlay {
                     if isLoading && !alterState {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: textColor))
-                            .transition(.scale.combined(with: .opacity))
+                        ZStack {
+                            Circle()
+                                .stroke(textColor.opacity(0.15), lineWidth: 2.5)
+                                .frame(width: 26, height: 26)
+                            Circle()
+                                .trim(from: 0, to: 0.25)
+                                .stroke(textColor, style: StrokeStyle(lineWidth: 2.5, lineCap: .round))
+                                .frame(width: 26, height: 26)
+                                .rotationEffect(.degrees(rotation))
+                                .onAppear {
+                                    rotation = 0
+                                    withAnimation(.linear(duration: 0.85).repeatForever(autoreverses: false)) {
+                                        rotation = 360
+                                    }
+                                }
+                        }
+                        .transition(.scale.combined(with: .opacity))
                     }
                 }
                 .frame(width: 200, height: alterState ? 200 : 60)
