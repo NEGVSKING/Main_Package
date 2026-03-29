@@ -147,7 +147,8 @@ public struct AddressField: View {
             let search = MKLocalSearch(request: request)
             let response = try await search.start()
             
-            if let firstItem = response.mapItems.first, let placemark = firstItem.placemark {
+            if let firstItem = response.mapItems.first {
+                let placemark = firstItem.placemark
                 self.selectedPlacemark = placemark
                 self.errorMessage = nil
                 
