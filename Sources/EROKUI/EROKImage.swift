@@ -38,5 +38,5 @@ public struct EROKImage: View {
 
 #Preview {
     EROKImage(imageName: "E-ROK_CLUB_TEXT")
-        .frame(width: 500, height: 500)
+        .frame(width: 100, height: 100)
 }
