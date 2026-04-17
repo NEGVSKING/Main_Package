@@ -21,7 +21,7 @@ let package = Package(
     targets: [
         .target(
             name: "EROKUI",
-            dependencies: [],
+            dependencies: ["FONTS"],
             path: "Sources/EROKUI",
             resources: [.process("Resources")]  // Bundling : Sources/EROKUI/Resources/"E-ROK_CLUB_TEXT.png"
         ),
