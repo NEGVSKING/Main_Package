@@ -8,10 +8,13 @@ public enum EROKFonts {
     public static let horizonOutlined = "Horizon-Outlined"
 
     // static let garantit une exécution unique et thread-safe (Swift)
+    // Scan dynamique : toute font ajoutée dans Sources/FONTS/ est enregistrée automatiquement
     private static let _register: Bool = {
-        let names = ["horizon.otf", "horizon_outlined.otf"]
-        for name in names {
-            guard let url = Bundle.module.url(forResource: name, withExtension: nil) else { continue }
+        let extensions = ["otf", "ttf"]
+        guard let resourcePath = Bundle.module.resourcePath else { return false }
+        let files = (try? FileManager.default.contentsOfDirectory(atPath: resourcePath)) ?? []
+        for file in files where extensions.contains((file as NSString).pathExtension.lowercased()) {
+            let url = URL(fileURLWithPath: resourcePath).appendingPathComponent(file)
             CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
         }
         return true

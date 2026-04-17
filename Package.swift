@@ -54,10 +54,7 @@ let package = Package(
             name: "FONTS",
             dependencies: [],
             path: "Sources/FONTS",
-            resources: [
-                .process("horizon.otf"),
-                .process("horizon_outlined.otf")
-            ]
+            resources: [.process(".")]  // Toutes les fonts du dossier (.otf, .ttf, etc.)
         )
     ]
 )
