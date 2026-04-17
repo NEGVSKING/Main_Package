@@ -6,139 +6,179 @@
 import SwiftUI
 import FONTS
 
-// MARK: - Font Style Helpers
+// MARK: - Font Extensions
+// registerAll() intégré → pas besoin d'appel manuel, fonts dispo immédiatement.
 
 public extension Font {
-    // registerAll() est appelé ici → s'exécute avant que SwiftUI resolve la font
+
+    // Horizon
     static func horizon(_ size: CGFloat) -> Font {
-        EROKFonts.registerAll()
-        return .custom(EROKFonts.horizon, size: size)
+        EROKFonts.registerAll(); return .custom(EROKFonts.horizon, size: size)
     }
     static func horizonOutlined(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.horizonOutlined, size: size)
+    }
+
+    // Silkscreen — .bold() supporté (deux fichiers, même famille)
+    static func silkscreen(_ size: CGFloat, bold: Bool = false) -> Font {
         EROKFonts.registerAll()
-        return .custom(EROKFonts.horizonOutlined, size: size)
+        return .custom(bold ? EROKFonts.silkscreenBold : EROKFonts.silkscreen, size: size)
+    }
+
+    // Big Shoulders (seulement Bold disponible)
+    static func bigShoulders(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.bigShouldersBold, size: size)
+    }
+
+    // IBM Plex Sans — variable font, .bold() / .italic() natifs d'Apple fonctionnent
+    static func ibmPlexSans(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.ibmPlexSans, size: size)
+    }
+    static func ibmPlexSansItalic(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.ibmPlexSansItalic, size: size)
+    }
+
+    // Bitcount (variable)
+    static func bitcount(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.bitcount, size: size)
+    }
+    static func bitcountGridSingle(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.bitcountGridSingle, size: size)
+    }
+
+    // Styles uniques
+    static func audiowide(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.audiowide, size: size)
+    }
+    static func bebasNeue(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.bebasNeue, size: size)
+    }
+    static func rubik80sFade(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.rubik80sFade, size: size)
+    }
+    static func zenDots(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.zenDots, size: size)
     }
 }
 
-// MARK: - Presentation View
+// MARK: - Showcase View
 
 public struct EROKFontsView: View {
 
-    public init() {
-        EROKFonts.registerAll()
-    }
+    public init() { EROKFonts.registerAll() }
 
     public var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 40) {
+            VStack(alignment: .leading, spacing: 0) {
+                header
+                    .padding(.bottom, 32)
 
-                // Header
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("E-ROK")
-                        .font(.horizon(48))
-                        .foregroundStyle(.white)
-                    Text("TYPOGRAPHY")
-                        .font(.horizonOutlined(18))
-                        .foregroundStyle(.white.opacity(0.6))
-                        .kerning(6)
-                }
-                .padding(.top, 20)
-
-                Divider().overlay(.white.opacity(0.15))
-
-                // Horizon
-                FontSection(
-                    label: "Horizon",
-                    fontName: EROKFonts.horizon,
-                    accentColor: .white
-                )
-
-                Divider().overlay(.white.opacity(0.15))
-
-                // Horizon Outlined
-                FontSection(
-                    label: "Horizon Outlined",
-                    fontName: EROKFonts.horizonOutlined,
-                    accentColor: .white.opacity(0.85)
-                )
-
-                Divider().overlay(.white.opacity(0.15))
-
-                // Alphabet
-                VStack(alignment: .leading, spacing: 16) {
-                    SectionTitle("ALPHABET")
-
-                    Text("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-                        .font(.horizon(15))
-                        .foregroundStyle(.white)
-                        .lineSpacing(6)
-
-                    Text("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-                        .font(.horizonOutlined(15))
-                        .foregroundStyle(.white.opacity(0.7))
-                        .lineSpacing(6)
+                fontGroup("HORIZON", note: "Outlined variant") {
+                    FontRow("E-ROK FAMILY CORP", font: .horizon(28))
+                    FontRow("E-ROK FAMILY CORP", font: .horizonOutlined(28))
                 }
 
-                Divider().overlay(.white.opacity(0.15))
-
-                // Chiffres
-                VStack(alignment: .leading, spacing: 16) {
-                    SectionTitle("CHIFFRES")
-
-                    Text("0123456789")
-                        .font(.horizon(28))
-                        .foregroundStyle(.white)
-
-                    Text("0123456789")
-                        .font(.horizonOutlined(28))
-                        .foregroundStyle(.white.opacity(0.7))
+                fontGroup("SILKSCREEN", note: ".bold() via paramètre") {
+                    FontRow("E-ROK Family Corp", font: .silkscreen(18))
+                    FontRow("E-ROK Family Corp", font: .silkscreen(18, bold: true))
                 }
 
-                Spacer(minLength: 40)
+                fontGroup("IBM PLEX SANS", note: "Variable — .bold() natif Apple") {
+                    FontRow("E-ROK Family Corp", font: .ibmPlexSans(18))
+                    FontRow("E-ROK Family Corp", font: .ibmPlexSans(18).bold())
+                    FontRow("E-ROK Family Corp", font: .ibmPlexSansItalic(18))
+                }
+
+                fontGroup("BIG SHOULDERS", note: "Bold uniquement") {
+                    FontRow("E-ROK FAMILY CORP", font: .bigShoulders(22))
+                }
+
+                fontGroup("BITCOUNT", note: "Variable") {
+                    FontRow("E-ROK Family Corp", font: .bitcount(18))
+                    FontRow("E-ROK Family Corp", font: .bitcountGridSingle(18))
+                }
+
+                fontGroup("AUDIOWIDE", note: nil) {
+                    FontRow("E-ROK Family Corp", font: .audiowide(18))
+                }
+
+                fontGroup("BEBAS NEUE", note: nil) {
+                    FontRow("E-ROK FAMILY CORP", font: .bebasNeue(28))
+                }
+
+                fontGroup("RUBIK 80S FADE", note: nil) {
+                    FontRow("E-ROK Family Corp", font: .rubik80sFade(18))
+                }
+
+                fontGroup("ZEN DOTS", note: nil) {
+                    FontRow("E-ROK Family Corp", font: .zenDots(18))
+                }
+
+                Spacer(minLength: 48)
             }
-            .padding(.horizontal, 28)
+            .padding(.horizontal, 24)
         }
         .background(Color.black.ignoresSafeArea())
+    }
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("E-ROK")
+                .font(.horizon(52))
+                .foregroundStyle(.white)
+                .padding(.top, 24)
+            Text("TYPOGRAPHY SYSTEM")
+                .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                .foregroundStyle(.white.opacity(0.4))
+                .kerning(4)
+        }
+    }
+
+    private func fontGroup<Content: View>(
+        _ title: String,
+        note: String?,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(title)
+                    .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                    .foregroundStyle(.white.opacity(0.35))
+                    .kerning(3)
+                if let note {
+                    Text("· \(note)")
+                        .font(.system(size: 10, design: .monospaced))
+                        .foregroundStyle(.white.opacity(0.2))
+                }
+            }
+            content()
+        }
+        .padding(.vertical, 20)
+        .overlay(alignment: .bottom) {
+            Rectangle()
+                .frame(height: 0.5)
+                .foregroundStyle(.white.opacity(0.08))
+        }
     }
 }
 
 // MARK: - Subviews
 
-private struct FontSection: View {
-    let label: String
-    let fontName: String
-    let accentColor: Color
-
-    private let sizes: [CGFloat] = [40, 28, 20, 14]
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            SectionTitle(label.uppercased())
-
-            ForEach(sizes, id: \.self) { size in
-                HStack(alignment: .firstTextBaseline) {
-                    Text("E-ROK")
-                        .font(.custom(fontName, size: size))
-                        .foregroundStyle(accentColor)
-                    Spacer()
-                    Text("\(Int(size))pt")
-                        .font(.system(size: 11, weight: .medium, design: .monospaced))
-                        .foregroundStyle(.white.opacity(0.3))
-                }
-            }
-        }
-    }
-}
-
-private struct SectionTitle: View {
+private struct FontRow: View {
     let text: String
-    init(_ text: String) { self.text = text }
+    let font: Font
+
+    init(_ text: String, font: Font) {
+        self.text = text
+        self.font = font
+    }
 
     var body: some View {
         Text(text)
-            .font(.system(size: 10, weight: .semibold, design: .monospaced))
-            .foregroundStyle(.white.opacity(0.4))
-            .kerning(3)
+            .font(font)
+            .foregroundStyle(.white)
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
     }
 }
 
