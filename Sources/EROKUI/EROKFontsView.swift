@@ -9,11 +9,14 @@ import FONTS
 // MARK: - Font Style Helpers
 
 public extension Font {
+    // registerAll() est appelé ici → s'exécute avant que SwiftUI resolve la font
     static func horizon(_ size: CGFloat) -> Font {
-        .custom(EROKFonts.horizon, size: size)
+        EROKFonts.registerAll()
+        return .custom(EROKFonts.horizon, size: size)
     }
     static func horizonOutlined(_ size: CGFloat) -> Font {
-        .custom(EROKFonts.horizonOutlined, size: size)
+        EROKFonts.registerAll()
+        return .custom(EROKFonts.horizonOutlined, size: size)
     }
 }
 
@@ -21,7 +24,9 @@ public extension Font {
 
 public struct EROKFontsView: View {
 
-    public init() {}
+    public init() {
+        EROKFonts.registerAll()
+    }
 
     public var body: some View {
         ScrollView {
@@ -94,7 +99,6 @@ public struct EROKFontsView: View {
             .padding(.horizontal, 28)
         }
         .background(Color.black.ignoresSafeArea())
-        .onAppear { EROKFonts.registerAll() }
     }
 }
 
