@@ -25,22 +25,56 @@ public enum EROKFonts {
     public static let sixtyfour           = "Sixtyfour-Regular"
     public static let sixtyfourConvergence = "SixtyfourConvergence-Regular"
 
+    // MARK: - Goliathe (Regular + Italic)
+    public static let goliathe       = "Goliathe"
+    public static let goliathItalic  = "Goliathe-Italic"
+
+    // MARK: - La Tequila (Regular + Outline)
+    public static let laTequila    = "LaTequila"
+    public static let laTequilaOut = "LaTequilaOut"
+
     // MARK: - Styles uniques
     public static let audiowide    = "Audiowide-Regular"
     public static let bebasNeue    = "BebasNeue-Regular"
     public static let bungeeShade  = "BungeeShade-Regular"
     public static let coralPixels  = "CoralPixels-Regular"
     public static let donGraffiti  = "DonGraffitiRegular"
+    public static let dstElvaqir   = "DSTElvaqir-Allcaps"
+    public static let gunydrops    = "Gunydrops"
     public static let homenaje     = "Homenaje-Regular"
+    public static let lemonade     = "Lemonade-Regular"
+    public static let merhaba      = "Merhaba"
+    public static let monoslam     = "MonoslamRegular"
     public static let monoton      = "Monoton-Regular"
+    public static let necosmic     = "NecosmicDisplay"
+    public static let neonblitz    = "Neonblitz"
     public static let nike         = "NIKE-Italic"
     public static let novaSquare   = "NovaSquare"
+    public static let orewa        = "OREWARegular"
     public static let pressStart2P = "PressStart2P-Regular"
+    public static let rigero       = "Rigero-Regular"
     public static let righteous    = "Righteous-Regular"
     public static let rubik80sFade = "Rubik80sFade-Regular"
     public static let rubikBeastly = "RubikBeastly-Regular"
     public static let yeezy        = "YEEZYTSTAR-Bold"
     public static let zenDots      = "ZenDots-Regular"
+
+    // MARK: - Brocklyn (Regular + Italic + Extrude)
+    public enum Brocklyn {
+        public static let regular = "Brocklyn-Regular"
+        public static let italic  = "Brocklyn-Italic"
+        public static let extrude = "Brocklyn-Extrude"
+    }
+
+    // MARK: - Velour (6 poids — familles séparées dans les métadonnées)
+    public enum Velour {
+        public static let thin      = "VelourThin"
+        public static let light     = "VelourLight"
+        public static let regular   = "VelourRegular"
+        public static let medium    = "Velourmedium"
+        public static let semiBold  = "VelourSemiBold"
+        public static let bold      = "VelourBold-Bold"
+    }
 
     // MARK: - IBM Plex Sans (famille complète — .bold() natif supporté)
     public enum IBMPlexSans {

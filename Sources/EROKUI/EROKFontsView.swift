@@ -108,6 +108,48 @@ public extension Font {
         EROKFonts.registerAll(); return .custom(EROKFonts.sixtyfourConvergence, size: size)
     }
 
+    // MARK: Brocklyn
+    static func brocklyn(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.Brocklyn.regular, size: size)
+    }
+    static func brocklynItalic(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.Brocklyn.italic, size: size)
+    }
+    static func brocklynExtrude(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.Brocklyn.extrude, size: size)
+    }
+
+    // MARK: Velour — poids via Font.Weight
+    static func velour(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
+        EROKFonts.registerAll()
+        let name: String
+        switch weight {
+        case .thin:     name = EROKFonts.Velour.thin
+        case .light:    name = EROKFonts.Velour.light
+        case .medium:   name = EROKFonts.Velour.medium
+        case .semibold: name = EROKFonts.Velour.semiBold
+        case .bold:     name = EROKFonts.Velour.bold
+        default:        name = EROKFonts.Velour.regular
+        }
+        return .custom(name, size: size)
+    }
+
+    // MARK: Goliathe
+    static func goliathe(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.goliathe, size: size)
+    }
+    static func goliathItalic(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.goliathItalic, size: size)
+    }
+
+    // MARK: La Tequila
+    static func laTequila(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.laTequila, size: size)
+    }
+    static func laTequilaOut(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.laTequilaOut, size: size)
+    }
+
     // MARK: Styles uniques
     static func audiowide(_ size: CGFloat) -> Font {
         EROKFonts.registerAll(); return .custom(EROKFonts.audiowide, size: size)
@@ -124,11 +166,32 @@ public extension Font {
     static func donGraffiti(_ size: CGFloat) -> Font {
         EROKFonts.registerAll(); return .custom(EROKFonts.donGraffiti, size: size)
     }
+    static func dstElvaqir(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.dstElvaqir, size: size)
+    }
+    static func gunydrops(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.gunydrops, size: size)
+    }
     static func homenaje(_ size: CGFloat) -> Font {
         EROKFonts.registerAll(); return .custom(EROKFonts.homenaje, size: size)
     }
+    static func lemonade(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.lemonade, size: size)
+    }
+    static func merhaba(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.merhaba, size: size)
+    }
+    static func monoslam(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.monoslam, size: size)
+    }
     static func monoton(_ size: CGFloat) -> Font {
         EROKFonts.registerAll(); return .custom(EROKFonts.monoton, size: size)
+    }
+    static func necosmic(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.necosmic, size: size)
+    }
+    static func neonblitz(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.neonblitz, size: size)
     }
     static func nike(_ size: CGFloat) -> Font {
         EROKFonts.registerAll(); return .custom(EROKFonts.nike, size: size)
@@ -136,8 +199,14 @@ public extension Font {
     static func novaSquare(_ size: CGFloat) -> Font {
         EROKFonts.registerAll(); return .custom(EROKFonts.novaSquare, size: size)
     }
+    static func orewa(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.orewa, size: size)
+    }
     static func pressStart2P(_ size: CGFloat) -> Font {
         EROKFonts.registerAll(); return .custom(EROKFonts.pressStart2P, size: size)
+    }
+    static func rigero(_ size: CGFloat) -> Font {
+        EROKFonts.registerAll(); return .custom(EROKFonts.rigero, size: size)
     }
     static func righteous(_ size: CGFloat) -> Font {
         EROKFonts.registerAll(); return .custom(EROKFonts.righteous, size: size)
@@ -197,17 +266,47 @@ public struct EROKFontsView: View {
                     row("E-ROK Family Corp", .sixtyfour(17))
                     row("E-ROK Family Corp", .sixtyfourConvergence(17))
                 }
+                group("BROCKLYN") {
+                    row("E-ROK Family Corp", .brocklyn(20))
+                    row("E-ROK Family Corp", .brocklynItalic(20))
+                    row("E-ROK Family Corp", .brocklynExtrude(20))
+                }
+                group("VELOUR", note: "weight: via Font.Weight") {
+                    row("Thin", .velour(17, weight: .thin))
+                    row("Light", .velour(17, weight: .light))
+                    row("Regular", .velour(17))
+                    row("Medium", .velour(17, weight: .medium))
+                    row("Semi Bold", .velour(17, weight: .semibold))
+                    row("Bold", .velour(17, weight: .bold))
+                }
+                group("GOLIATHE") {
+                    row("E-ROK Family Corp", .goliathe(20))
+                    row("E-ROK Family Corp", .goliathItalic(20))
+                }
+                group("LA TEQUILA") {
+                    row("E-ROK Family Corp", .laTequila(22))
+                    row("E-ROK Family Corp", .laTequilaOut(22))
+                }
                 group("BIG SHOULDERS") { row("E-ROK FAMILY CORP", .bigShoulders(22)) }
                 group("BEBAS NEUE")     { row("E-ROK FAMILY CORP", .bebasNeue(26)) }
                 group("AUDIOWIDE")      { row("E-ROK Family Corp", .audiowide(17)) }
                 group("BUNGEE SHADE")   { row("E-ROK Family Corp", .bungeeShade(17)) }
                 group("CORAL PIXELS")   { row("E-ROK Family Corp", .coralPixels(17)) }
                 group("DON GRAFFITI")   { row("E-ROK Family Corp", .donGraffiti(22)) }
+                group("DST ELVAQIR")    { row("E-ROK FAMILY CORP", .dstElvaqir(20)) }
+                group("GUNYDROPS")      { row("E-ROK Family Corp", .gunydrops(22)) }
                 group("HOMENAJE")       { row("E-ROK FAMILY CORP", .homenaje(22)) }
+                group("LEMONADE")       { row("E-ROK Family Corp", .lemonade(22)) }
+                group("MERHABA")        { row("E-ROK Family Corp", .merhaba(22)) }
+                group("MONOSLAM")       { row("E-ROK Family Corp", .monoslam(17)) }
                 group("MONOTON")        { row("E-ROK", .monoton(22)) }
+                group("NECOSMIC")       { row("E-ROK Family Corp", .necosmic(20)) }
+                group("NEONBLITZ")      { row("E-ROK Family Corp", .neonblitz(22)) }
                 group("NIKE")           { row("E-ROK FAMILY CORP", .nike(22)) }
                 group("NOVA SQUARE")    { row("E-ROK Family Corp", .novaSquare(17)) }
+                group("OREWA")          { row("E-ROK FAMILY CORP", .orewa(22)) }
                 group("PRESS START 2P") { row("E-ROK", .pressStart2P(14)) }
+                group("RIGERO")         { row("E-ROK Family Corp", .rigero(20)) }
                 group("RIGHTEOUS")      { row("E-ROK Family Corp", .righteous(20)) }
                 group("RUBIK 80S FADE") { row("E-ROK Family Corp", .rubik80sFade(17)) }
                 group("RUBIK BEASTLY")  { row("E-ROK Family Corp", .rubikBeastly(17)) }
