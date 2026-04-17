@@ -12,7 +12,8 @@ let package = Package(
         .library(name: "EROKViews", targets: ["EROKViews"]),
         .library(name: "SHIFT", targets: ["SHIFT"]),
         .library(name: "MYMECA", targets: ["MYMECA"]),
-        .library(name: "PROFILES", targets: ["PROFILES"])
+        .library(name: "PROFILES", targets: ["PROFILES"]),
+        .library(name: "FONTS", targets: ["FONTS"])
     ],
     dependencies: [
         // Firebase supprimé – on gère auth/Firestore directement dans l'app SHIFT
@@ -48,6 +49,15 @@ let package = Package(
             name: "PROFILES",
             dependencies: ["EROKUI", "EROKCore", "EROKViews","SHIFT", "MYMECA"],
             path: "Sources/PROFILES"
+        ),
+        .target(
+            name: "FONTS",
+            dependencies: [],
+            path: "Sources/FONTS",
+            resources: [
+                .process("horizon.otf"),
+                .process("horizon_outlined.otf")
+            ]
         )
     ]
 )
