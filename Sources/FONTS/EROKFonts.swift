@@ -4,7 +4,7 @@ import Foundation
 /// Registers custom E-ROK fonts from the FONTS bundle.
 public enum EROKFonts {
 
-    public static let horizon = "Horizon"
+    public static let horizon = "Horizon-Bold"
     public static let horizonOutlined = "Horizon-Outlined"
 
     /// Call once at app startup to register all custom fonts.
