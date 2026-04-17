@@ -54,7 +54,7 @@ let package = Package(
             name: "FONTS",
             dependencies: [],
             path: "Sources/FONTS",
-            resources: [.process(".")]  // Toutes les fonts du dossier (.otf, .ttf, etc.)
+            resources: [.process("Resources")]  // Toutes les fonts dans Sources/FONTS/Resources/
         )
     ]
 )
