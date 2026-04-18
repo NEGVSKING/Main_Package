@@ -23,7 +23,7 @@ public enum SoftDrinkType: String, CaseIterable, Sendable {
 }
 
 public struct SoftDrinkBrands {
-    nonisolated(unsafe) public static let brandsByType: [SoftDrinkType: [String]] = [
+    public static let brandsByType: [SoftDrinkType: [String]] = [
 
         // MARK: - Colas
         .cola: [
