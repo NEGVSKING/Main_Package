@@ -41,6 +41,18 @@ public enum ServerSpecialty: String, Codable, CaseIterable, Identifiable {
     case sakeSommelier = "Sommelier saké"
     case cashier = "Gestion caisse"
     case runner = "Runner"
+    case mixologistSignature = "Cocktails signatures"
+    case molecularGastronomy = "Mixologie moléculaire"
+    case hostessReception = "Hôtesse d'accueil"
+    case orderTaker = "Prise de commande"
+    case wineTastingExpert = "Dégustations privées"
+    case inventoryManager = "Gestion des stocks"
+    case vipSuiteService = "Service loge privée"
+    case bilingualService = "Service bilingue"
+    case teaSommelier = "Sommelier thé"
+    case flambeService = "Service flambage"
+    case hygieneReferent = "Référent hygiène"
+    case securityLiaison = "Liaison sécurité"
 
     public var id: String { rawValue }
 
@@ -100,6 +112,30 @@ public enum ServerSpecialty: String, Codable, CaseIterable, Identifiable {
             return "Gestion caisse & facturation"
         case .runner:
             return "Runner (Soutien service rapide)"
+        case .mixologistSignature:
+            return "Cocktails Signatures (Créateur de cartes)"
+        case .molecularGastronomy:
+            return "Mixologie Moléculaire (Effets fumants, sphérifications)"
+        case .hostessReception:
+            return "Accueil & Vestiaire (Hôte/Hôtesse d'accueil)"
+        case .orderTaker:
+            return "Prise de commande mobile (Expert tablette/POS)"
+        case .wineTastingExpert:
+            return "Animateur dégustations (Vins & Spiritueux)"
+        case .inventoryManager:
+            return "Gestion de cave & stocks"
+        case .vipSuiteService:
+            return "Service en Suite / Loge Privée"
+        case .bilingualService:
+            return "Service multilingue (Anglais/Espagnol/etc.)"
+        case .teaSommelier:
+            return "Sommelier en Thé / Infusions premium"
+        case .flambeService:
+            return "Service Flambage & Découpe en salle"
+        case .hygieneReferent:
+            return "Référent Hygiène & Sécurité Alimentaire (HACCP)"
+        case .securityLiaison:
+            return "Coordinateur service & sécurité"
         }
     }
 }
