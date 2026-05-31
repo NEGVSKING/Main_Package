@@ -29,6 +29,18 @@ public enum ServerSpecialty: String, Codable, CaseIterable, Identifiable {
     case catering = "Traiteur"
     case barista = "Barista"
     case sommelier = "Sommelier"
+    case beerExpert = "Biérologie"
+    case flairBartending = "Flair bartending"
+    case whiskeySpecialist = "Spécialiste whisky"
+    case shishaMaster = "Maître chicha"
+    case cigarSommelier = "Sommelier cigares"
+    case vipHost = "Hôte VIP"
+    case caviarService = "Service caviar"
+    case guestRelations = "Relations clientèle"
+    case mixologyShow = "Show mixologie"
+    case sakeSommelier = "Sommelier saké"
+    case cashier = "Gestion caisse"
+    case runner = "Runner"
 
     public var id: String { rawValue }
 
@@ -64,6 +76,30 @@ public enum ServerSpecialty: String, Codable, CaseIterable, Identifiable {
             return "Barista"
         case .sommelier:
             return "Sommelier"
+        case .beerExpert:
+            return "Biérologie (Service & expertise bières)"
+        case .flairBartending:
+            return "Flair Bartending (Mixologie acrobatique)"
+        case .whiskeySpecialist:
+            return "Spécialiste Whisky (Expert spiritueux vieillis)"
+        case .shishaMaster:
+            return "Maître Chicha (Préparation de narguilé)"
+        case .cigarSommelier:
+            return "Sommelier en cigares (Habanos)"
+        case .vipHost:
+            return "Hôte / Hôtesse VIP Dédié(e)"
+        case .caviarService:
+            return "Service Caviar & Prestige"
+        case .guestRelations:
+            return "Relations publiques / Guest relations"
+        case .mixologyShow:
+            return "Spectacle & Animation de bar"
+        case .sakeSommelier:
+            return "Sommelier en Saké"
+        case .cashier:
+            return "Gestion caisse & facturation"
+        case .runner:
+            return "Runner (Soutien service rapide)"
         }
     }
 }

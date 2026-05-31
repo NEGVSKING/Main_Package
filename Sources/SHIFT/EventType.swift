@@ -92,6 +92,26 @@ public enum EventType: String, Codable, CaseIterable, Identifiable {
     case boatParty = "Soirée en Bateau"
     case speakeasyNight = "Soirée Speakeasy"
     case acousticNight = "Soirée Acoustique"
+    case secretShowcase = "Showcase Secret"
+    case vipGala = "Gala VIP"
+    case afterwork = "Afterwork"
+    case foamParty = "Soirée Mousse"
+    case poolRave = "Pool Rave"
+    case boilerRoomEvent = "Boiler Room"
+    case neonGlowParty = "Soirée Néon & Glow"
+    case pyjamaPartyEvent = "Soirée Pyjama"
+    case bachelorParty = "Bachelor Party"
+    case birthdayEvent = "Célébration d'Anniversaire"
+    case corporateGala = "Gala d'Entreprise"
+    case fashionShow = "Fashion Show"
+    case artOpening = "Vernissage de Galerie d'Art"
+    case tastingDinner = "Soirée Dégustation Prestige"
+    case retroDisco = "Soirée Rétro Disco"
+    case undergroundTechno = "Soirée Techno Underground"
+    case rooftopSunset = "Rooftop Sunset Session"
+    case festivalAfterparty = "Afterparty de Festival"
+    case speedDating = "Soirée Speed Dating"
+    case singlesNight = "Soirée Célibataires"
     
     public var id: String { rawValue }
     
@@ -175,13 +195,33 @@ public enum EventType: String, Codable, CaseIterable, Identifiable {
         case .boatParty: return "Soirée en Bateau"
         case .speakeasyNight: return "Soirée Speakeasy"
         case .acousticNight: return "Soirée Acoustique"
+        case .secretShowcase: return "Showcase Secret"
+        case .vipGala: return "Gala VIP"
+        case .afterwork: return "Afterwork"
+        case .foamParty: return "Soirée Mousse"
+        case .poolRave: return "Pool Rave"
+        case .boilerRoomEvent: return "Boiler Room"
+        case .neonGlowParty: return "Soirée Néon & Glow"
+        case .pyjamaPartyEvent: return "Soirée Pyjama"
+        case .bachelorParty: return "Enterrement de vie de garçon/jeune fille (EVG/EVJF)"
+        case .birthdayEvent: return "Célébration d'Anniversaire"
+        case .corporateGala: return "Gala d'Entreprise"
+        case .fashionShow: return "Fashion Show"
+        case .artOpening: return "Vernissage de Galerie d'Art"
+        case .tastingDinner: return "Soirée Dégustation Prestige"
+        case .retroDisco: return "Soirée Rétro Disco"
+        case .undergroundTechno: return "Soirée Techno Underground"
+        case .rooftopSunset: return "Rooftop Sunset Session"
+        case .festivalAfterparty: return "Afterparty de Festival"
+        case .speedDating: return "Soirée Speed Dating"
+        case .singlesNight: return "Soirée Célibataires"
         }
         
          
     }
     public var isFeminine: Bool {
        switch self {
-       case .soiree, .specialSoiree, .themedNight, .clubNight, .rooftopParty, .beachParty, .poolParty, .karaokeNight, .ladiesNight, .gentlemenNight, .prideNight, .festivalNight, .comedyNight, .cocktailNight, .costumeParty, .glowParty, .neonNight, .retroNight, .eightiesNight, .ninetiesNight, .twoThousandsNight, .hipHopNight, .reggaeNight, .latinNight, .jazzNight, .bluesNight, .rockNight, .popNight, .edmNight, .technoNight, .houseNight, .tranceNight, .salsaNight, .bachataNight, .halloweenParty, .christmasParty, .newYearParty, .valentinesNight, .stPatrickParty, .easterParty, .backToSchoolParty, .thanksgivingParty, .blackFridayParty, .winterWonderland, .greatGatsbyNight, .hollywoodNight, .tropicalNight, .carnivalNight, .pirateParty, .westernNight, .luauParty, .superheroesNight, .fairyTaleNight, .spaceNight, .fashionShowNight, .burlesqueNight:
+       case .soiree, .specialSoiree, .themedNight, .clubNight, .rooftopParty, .beachParty, .poolParty, .karaokeNight, .ladiesNight, .gentlemenNight, .prideNight, .festivalNight, .comedyNight, .cocktailNight, .costumeParty, .glowParty, .neonNight, .retroNight, .eightiesNight, .ninetiesNight, .twoThousandsNight, .hipHopNight, .reggaeNight, .latinNight, .jazzNight, .bluesNight, .rockNight, .popNight, .edmNight, .technoNight, .houseNight, .tranceNight, .salsaNight, .bachataNight, .halloweenParty, .christmasParty, .newYearParty, .valentinesNight, .stPatrickParty, .easterParty, .backToSchoolParty, .thanksgivingParty, .blackFridayParty, .winterWonderland, .greatGatsbyNight, .hollywoodNight, .tropicalNight, .carnivalNight, .pirateParty, .westernNight, .luauParty, .superheroesNight, .fairyTaleNight, .spaceNight, .fashionShowNight, .burlesqueNight, .foamParty, .poolRave, .boilerRoomEvent, .neonGlowParty, .pyjamaPartyEvent, .birthdayEvent, .tastingDinner, .retroDisco, .undergroundTechno, .rooftopSunset, .speedDating, .singlesNight:
            return true // Féminin : "une Soirée", "une Soirée Club", etc.
        default:
            return false // Masculin : "un Concert Live", "un Showcase", etc.
