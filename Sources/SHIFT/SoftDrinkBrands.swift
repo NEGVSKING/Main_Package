@@ -5,7 +5,7 @@
 
 import Foundation
 
-public enum SoftDrinkType: String, CaseIterable, Sendable {
+public enum SoftDrinkType: String, Codable, CaseIterable, Identifiable, Sendable {
     case cola           = "Cola"
     case lemonade       = "Limonade"
     case orangeSoda     = "Soda Orange"
@@ -20,6 +20,8 @@ public enum SoftDrinkType: String, CaseIterable, Sendable {
     case hotDrink       = "Boisson chaude"
     case smoothie       = "Smoothie"
     case other          = "Autres"
+
+    public var id: String { rawValue }
 }
 
 public struct SoftDrinkBrands {
