@@ -23,7 +23,15 @@ public struct AlcoholBrands {
             "Hoegaarden", "Blue Moon", "Newcastle Brown Ale", "Boddingtons",
             "Foster's", "Coors Light", "Miller Lite", "Bud Light",
             "Tuborg", "Efes", "San Miguel", "Estrella Damm", "Mahou",
-            "Duvel", "Chimay", "Orval", "Westmalle", "Rochefort", "La Trappe"
+            "Duvel", "Chimay", "Orval", "Westmalle", "Rochefort", "La Trappe",
+            "Delirium Tremens", "Chouffe", "Karmeliet", "Pilsner Urquell", "Beck's",
+            "Kirin Ichiban", "Samuel Adams", "Paulaner", "Franziskaner", "Weihenstephaner",
+            "Erdinger", "Lagunitas IPA", "Sierra Nevada Pale Ale", "Punk IPA", "Pelforth",
+            "Goudale", "Fischer", "Vedett", "Lindemans", "Kasteel", "Desperados Red",
+            "San Miguel Selecta", "Birra Moretti", "Red Stripe", "Carib", "Anchor Steam",
+            "Kona Big Wave", "Estrella Galicia", "Super Bock", "Sagres", "Quilmes",
+            "Club Colombia", "Cusqueña", "Presidente", "Mythos", "Fix", "Carling",
+            "Tennent's", "Smithwick's", "Kilkenny", "Innis & Gunn"
         ],
 
         // MARK: - Vins rouges
@@ -44,7 +52,16 @@ public struct AlcoholBrands {
             "Côtes du Rhône", "Châteauneuf-du-Pape", "Saint-Émilion",
             "Pomerol", "Médoc", "Beaujolais", "Bourgogne Pinot Noir",
             "Zinfandel", "Shiraz", "Tempranillo", "Grenache",
-            "Carménère", "Tannat", "Montepulciano"
+            "Carménère", "Tannat", "Montepulciano",
+            "Château Lafite Rothschild", "Château Palmer", "Château Lynch-Bages",
+            "Château Figeac", "Château Angélus", "Gevrey-Chambertin", "Nuits-Saint-Georges",
+            "Chambolle-Musigny", "Vosne-Romanée", "Pommard", "Volnay", "Saint-Joseph",
+            "Hermitage", "Crozes-Hermitage", "Côte-Rôtie", "Gigondas", "Vacqueyras",
+            "Bandol Rouge", "Cahors", "Madiran", "Fitou", "Minervois", "Corbières",
+            "Saint-Amour", "Morgon", "Fleurie", "Juliénas", "Brouilly", "Barbera d'Asti",
+            "Valpolicella Ripasso", "Nero d'Avola", "Primitivo di Manduria", "Priorat",
+            "Ribera del Duero", "Mendoza Malbec", "Napa Valley Cabernet", "Stags Leap",
+            "Caymus", "Silver Oak"
         ],
 
         // MARK: - Vins blancs
@@ -65,7 +82,15 @@ public struct AlcoholBrands {
             "Pinot Blanc", "Sylvaner", "Chenin Blanc",
             "Vouvray", "Montlouis", "Savennières",
             "Mâcon-Villages", "Saint-Véran",
-            "Verdejo", "Albariño", "Txakoli"
+            "Verdejo", "Albariño", "Txakoli",
+            "Pouilly-Fuissé", "Petit Chablis", "Chablis Premier Cru", "Chablis Grand Cru",
+            "Condrieu", "Châteauneuf-du-Pape Blanc", "Hermitage Blanc", "Côtes du Rhône Blanc",
+            "Crozes-Hermitage Blanc", "Saint-Aubin", "Corton-Charlemagne", "Montrachet",
+            "Muscadet Sèvre et Maine", "Gros Manseng", "Petit Manseng", "Bordeaux Blanc Sec",
+            "Entre-Deux-Mers", "Pessac-Léognan Blanc", "Jurançon Sec", "Rias Baixas",
+            "Rueda", "Vinho Verde", "Pinot Blanc d'Alsace", "Riesling Grand Cru",
+            "Sancerre Grand Chemarin", "Cloudy Bay Sauvignon Blanc", "Marlborough Sauvignon Blanc",
+            "Soave Classico", "Gavi di Gavi", "Roero Arneis", "Orvieto Classico"
         ],
 
         // MARK: - Vins rosés
@@ -83,7 +108,13 @@ public struct AlcoholBrands {
             "Côteaux d'Aix Rosé", "Palette Rosé", "Cassis Rosé",
             "Irouléguy Rosé", "Cabernet d'Anjou", "Rosé de Loire",
             "Côtes du Rhône Rosé", "Ventoux Rosé", "Luberon Rosé",
-            "Île de Beauté Rosé", "Rosé d'Oc"
+            "Île de Beauté Rosé", "Rosé d'Oc",
+            "Garrus", "Rock Angel", "The Palm by Whispering Angel", "Minuty M",
+            "Minuty Rose et Or", "Minuty 281", "Château d'Aquéria", "Domaine de la Mordorée",
+            "Domaine Tempier", "Ott Château de Selle", "Hampton Water", "Source Sacha Lichine",
+            "Studio by Miraval", "Gris Blanc Gérard Bertrand", "Coteaux de l'Aubance",
+            "Rosé d'Anjou", "Rosé des Riceys", "Chiaretto di Bardolino", "Cerasuolo d'Abruzzo",
+            "White Zinfandel", "Mateus Rosé", "Lancers Rosé"
         ],
 
         // MARK: - Effervescents
@@ -100,7 +131,14 @@ public struct AlcoholBrands {
             "Vouvray Pétillant", "Bugey Cerdon", "Gaillac Perlé",
             "English Sparkling Wine", "Graham Beck Brut",
             "Codorníu", "Freixenet", "Segura Viudas",
-            "Nyetimber", "Chapel Down", "Camel Valley"
+            "Nyetimber", "Chapel Down", "Camel Valley",
+            "Prosecco Superiore Conegliano", "Mionetto Prosecco", "La Marca Prosecco",
+            "Freixenet Cordon Negro", "Codorníu Clasico", "Gramona Cava",
+            "Llopart Cava", "Ca' del Bosco Franciacorta", "Bellavista Franciacorta",
+            "Ferrari Trento Brut", "Rotari Trento DOC", "Jansz Premium Cuvée",
+            "Chandon Brut", "Schramsberg Mirabelle", "Roederer Estate Brut",
+            "Bouvet-Ladubay Saumur", "Ackerman Crémant", "Gratien & Meyer",
+            "Antech Limoux", "Sieur d'Arques"
         ],
 
         // MARK: - Champagnes
@@ -118,7 +156,17 @@ public struct AlcoholBrands {
             "Armand de Brignac", "Cristal", "Salon", "Jacquesson",
             "Bruno Paillard", "Henri Giraud", "Drappier", "Philipponnat",
             "Nicolas Feuillatte", "G.H. Mumm", "Lanson", "Canard-Duchêne",
-            "Ayala", "Barons de Rothschild", "Besserat de Bellefon"
+            "Ayala", "Barons de Rothschild", "Besserat de Bellefon",
+            "Dom Ruinart", "Veuve Clicquot La Grande Dame", "Krug Clos d'Ambonnay",
+            "Krug Clos du Mesnil", "Bollinger La Grande Année", "Bollinger R.D.",
+            "Laurent-Perrier Grand Siècle", "Pol Roger Sir Winston Churchill",
+            "Taittinger Comtes de Champagne", "Perrier-Jouët Belle Epoque",
+            "Mumm Cordon Rouge", "R de Ruinart", "Ruinart Blanc de Blancs",
+            "Ruinart Rosé", "Moët & Chandon Imperial", "Moët & Chandon Grand Vintage",
+            "Veuve Clicquot Yellow Label", "Veuve Clicquot Rich", "Piper-Heidsieck Rare",
+            "Charles Heidsieck Brut Réserve", "Delamotte", "Palmer & Co", "Devaux",
+            "Mailly Grand Cru", "Egly-Ouriet", "Jacques Selosse", "Larmandier-Bernier",
+            "Agrapart", "Benoît Lahaye", "Champagne Collet", "Champagne Castelnau"
         ],
 
         // MARK: - Vins fortifiés
@@ -136,7 +184,13 @@ public struct AlcoholBrands {
             "Marsala Superiore", "Marsala Vergine",
             "Banyuls Rancio", "Maury", "Rivesaltes",
             "Muscat de Beaumes-de-Venise", "Muscat de Frontignan",
-            "Pineau des Charentes", "Floc de Gascogne", "Ratafia de Champagne"
+            "Pineau des Charentes", "Floc de Gascogne", "Ratafia de Champagne",
+            "Kopke Port", "Niepoort Port", "Quinta do Noval", "Croft Port",
+            "Ramos Pinto", "Tio Pepe Fino", "Lustau Sherry", "Valdespino Sherry",
+            "Harveys Bristol Cream", "Blandy's Madeira", "Cossart Gordon",
+            "Pellegrino Marsala", "Florio Marsala", "Noilly Prat Original Dry",
+            "Dubonnet", "Byrrh", "Lillet Rouge", "Punt e Mes", "Carpano Antica Formula",
+            "Cocchi Vermouth di Torino"
         ],
 
         // MARK: - Vins de dessert
@@ -155,7 +209,14 @@ public struct AlcoholBrands {
             "Gewurztraminer Vendanges Tardives",
             "Riesling Sélection de Grains Nobles",
             "Vin de Paille du Jura", "Monbazillac",
-            "Pacherenc du Vic-Bilh Doux", "Gaillac Doux"
+            "Pacherenc du Vic-Bilh Doux", "Gaillac Doux",
+            "Château d'Yquem", "Château Suduiraut", "Château Rieussec",
+            "Château Guiraud", "Château Climens", "Château Coutet",
+            "Tokaji Aszú 6 Puttonyos", "Royal Tokaji", "Oremus Tokaji",
+            "Kracher TBA", "Inniskillin Icewine", "Jackson-Triggs Icewine",
+            "Klein Constantia Vin de Constance", "Banyuls Grand Cru", "Maury Tuilé",
+            "Muscat de Rivesaltes", "Commandaria", "Passito di Pantelleria",
+            "Moscato de Setúbal", "Rasteau Vin Doux Naturel"
         ],
 
         // MARK: - Vins bio
@@ -169,7 +230,12 @@ public struct AlcoholBrands {
             "Château La Tour Figeac", "Vignoble du Rêveur",
             "Domaine Léon Barral", "Mas Bruguière", "Domaine Gauby",
             "Domaine Gramenon", "Domaine des Roches Neuves",
-            "Clos du Tue-Bœuf", "Château Le Puy", "Domaine de l'Écu"
+            "Clos du Tue-Bœuf", "Château Le Puy", "Domaine de l'Écu",
+            "Gérard Bertrand Clos d'Ora", "Gérard Bertrand Cigalus", "Domaine Cazes",
+            "Château Maris", "Domaine Pithon-Paillé", "Domaine Valentin Zusslin",
+            "Domaine Binner", "Domaine Josmeyer", "Domaine Lapierre",
+            "Château de Beaucastel", "Domaine Tempier Bio", "Château de Roquefort",
+            "Domaine Combier", "M. Chapoutier Bio"
         ],
 
         // MARK: - Vins biodynamiques
@@ -182,7 +248,12 @@ public struct AlcoholBrands {
             "Domaine Leroy", "Domaine Leflaive", "Domaine Huet",
             "Domaine Trapet", "Domaine Weinbach", "Domaine Ostertag",
             "Mas de Daumas Gassac", "Domaine du Possible",
-            "Domaine Marlier", "Domaine de la Vougeraie"
+            "Domaine Marlier", "Domaine de la Vougeraie",
+            "Domaine Marcel Deiss", "Domaine Viret", "Château de Chambert",
+            "Domaine de Villeneuve", "Domaine Zusslin Biodynamique",
+            "M. Chapoutier Fac & Spera", "Domaine de la Haute Olive",
+            "Domaine Grand Veneur", "Domaine de la Taille aux Loups",
+            "Domaine Philippe Gilbert", "Château Meylet", "Domaine Derain"
         ],
 
         // MARK: - Whiskies
@@ -206,7 +277,17 @@ public struct AlcoholBrands {
             "Oban", "Dalmore", "Glenlivet",
             "Highland Park", "Talisker", "Springbank",
             "Jameson", "Bushmills", "Redbreast",
-            "Nikka Whisky", "Yamazaki", "Hakushu", "Hibiki"
+            "Nikka Whisky", "Yamazaki", "Hakushu", "Hibiki",
+            "Cardhu", "Knockando", "Balvenie", "Aberlour", "Glenmorangie",
+            "Talisker 10", "Lagavulin 16", "Laphroaig 10", "Ardbeg 10", "Bowmore",
+            "Caol Ila", "Jura", "Auchentoshan", "Glenkinchie", "Highland Park 12",
+            "Bruichladdich", "Port Charlotte", "Octomore", "Monkey Shoulder",
+            "Johnnie Walker Red", "Johnnie Walker Green", "Chivas Royal Salute",
+            "Jameson Black Barrel", "Tullamore D.E.W.", "Teeling", "Connemara",
+            "The Sexton", "Nikka From The Barrel", "Nikka Coffey Grain", "Kavalan",
+            "Amrut", "Wild Turkey 101", "Bulleit Bourbon", "Bulleit Rye", "Jim Beam Black",
+            "Knob Creek", "Basil Hayden's", "Michter's Bourbon", "Sazerac Rye",
+            "WhistlePig Rye", "Crown Royal", "Canadian Club"
         ],
 
         // MARK: - Vodkas
@@ -226,7 +307,15 @@ public struct AlcoholBrands {
             "Hangar 1", "Chopin", "Luksusowa",
             "Żubrówka", "Wyborowa", "Sobieski",
             "UV Vodka", "SKYY", "Three Olives",
-            "Pinnacle", "Burnett's", "New Amsterdam"
+            "Pinnacle", "Burnett's", "New Amsterdam",
+            "Belvedere Intense", "Cîroc Peach", "Cîroc Coconut", "Cîroc Pineapple",
+            "Grey Goose VX", "Grey Goose L'Orange", "Absolut Citron", "Absolut Vanilia",
+            "Absolut Raspberri", "Zubrowka Biala", "Stolichnaya Elit", "Russian Standard Platinum",
+            "Russian Standard Gold", "Beluga Noble", "Beluga Transatlantic", "Beluga Gold Line",
+            "Mamont", "Kremlin Award", "Soplica", "U'Luvka", "Pravda", "Wódka",
+            "Debowa", "Vestal", "Potocki", "Single Estate Vodka", "Snow Queen",
+            "Royal Dragon", "Skyy Infusions", "Sobieski Estate", "Nemiroff", "Khortytsa",
+            "Zirkova", "Dripping Springs"
         ],
 
         // MARK: - Rhums
@@ -249,7 +338,19 @@ public struct AlcoholBrands {
             "Rhum J.M.", "Rhum Neisson", "Rhum Bologne",
             "Doorly's", "El Dorado 12", "El Dorado 15",
             "Angostura 1919", "Flor de Caña", "Ron Abuelo",
-            "Barceló", "Santa Teresa 1796", "Botran"
+            "Barceló", "Santa Teresa 1796", "Botran",
+            "Don Papa", "Don Papa Baroko", "Kraken Black Spiced", "Bumbu Rum",
+            "Bumbu XO", "Sailor Jerry", "Havana Club Seleccion de Maestros",
+            "Havana Club 15 Ans", "Havana Club Maximo", "Bacardi Diez", "Mount Gay XO",
+            "Mount Gay 1703", "Appleton Estate 12", "Appleton Estate 21", "Diplomatico Mantuano",
+            "Diplomatico Seleccion de Familia", "Plantation XO 20th Anniversary",
+            "Plantation Pineapple", "Rhum J.M. XO", "Rhum J.M. VSOP", "Clément XO",
+            "Clément VSOP", "Saint James XO", "Trois Rivières VSOP", "Trois Rivières Triple Millésime",
+            "Neisson Profil 105", "Damoiseau XO", "Bologne VSOP", "Zacapa Royal",
+            "Dictador 12", "Dictador 20", "Flor de Caña 12", "Flor de Caña 18",
+            "Abuelo 12", "Abuelo Centuria", "Barceló Imperial", "Barceló Onyx",
+            "Goslings Black Seal", "Pusser's Gunpowder", "Wray & Nephew White Overproof",
+            "Cachaça 51", "Leblon Cachaça"
         ],
 
         // MARK: - Gins
@@ -270,7 +371,16 @@ public struct AlcoholBrands {
             "Nordes", "Ungava", "St. George",
             "Drumshanbo", "Bertha's Revenge",
             "Four Pillars", "Aviation", "Empress 1908",
-            "Brockmans", "Oxley", "No.3 London Dry"
+            "Brockmans", "Oxley", "No.3 London Dry",
+            "Bombay Bramble", "Bombay Sapphire East", "Tanqueray Flor de Sevilla",
+            "Tanqueray Lovage", "Gordon's Pink Gin", "Beefeater Pink", "Hendrick's Neptunia",
+            "Hendrick's Flora Adora", "Malfy Con Limone", "Malfy Gin Rosa", "Malfy Con Arancia",
+            "Citadelle Jardin d'Été", "Citadelle No.12", "Engine Gin", "Generous Gin",
+            "Christian Drouin Le Gin", "G'Vine Floraison", "G'Vine Nouaison", "Cotswolds Dry Gin",
+            "Harris Gin", "Silent Pool", "Tarquin's Cornish Gin", "Mermaid Gin", "Brooklyn Gin",
+            "Death's Door", "Bluecoat", "Koval Dry Gin", "Ki No Bi Kyoto Dry Gin",
+            "Elephant Gin", "Windspiel", "Ferdinand's Saar Dry Gin", "Siegfried Rheinland Dry Gin",
+            "Broken Heart", "Peddlers Shanghai Gin", "Dictador Ortodoxy", "Dictador Treasure"
         ],
 
         // MARK: - Tequilas
@@ -290,7 +400,18 @@ public struct AlcoholBrands {
             "Casa Noble", "Fortaleza", "G4",
             "Tequila Ocho", "El Tesoro", "Siete Leguas",
             "Clase Azul", "Código 1530",
-            "1800 Silver", "Hornitos", "Milagro", "Lunazul"
+            "1800 Silver", "Hornitos", "Milagro", "Lunazul",
+            "Clase Azul Reposado", "Clase Azul Añejo", "Don Julio 70 Anejo Claro",
+            "Patrón El Cielo", "Patrón Gran Platinum", "Patrón El Alto", "Casamigos Mezcal",
+            "Del Maguey Vida Mezcal", "Ilegal Mezcal Joven", "Ilegal Mezcal Reposado",
+            "Montelobos Mezcal", "Casamigos Extra Añejo", "Jose Cuervo Tradicional",
+            "Herradura Añejo", "Herradura Ultra", "Espolòn Reposado", "Espolòn Añejo",
+            "Volcan De Mi Tierra Blanco", "Volcan De Mi Tierra Cristalino", "Volcan De Mi Tierra X.A",
+            "Teremana Blanco", "Teremana Reposado", "Teremana Añejo", "DeLeón Blanco",
+            "DeLeón Reposado", "Gran Centenario Plata", "Gran Centenario Reposado",
+            "1800 Reposado", "1800 Añejo", "1800 Cristalino", "Cazadores Reposado",
+            "Corralejo Reposado", "Corralejo Añejo", "Centinela Blanco", "Centinela Reposado",
+            "Tapatio Blanco", "Tapatio Reposado", "Tapatio Excelencia Extra Añejo"
         ],
 
         // MARK: - Brandies / Cognacs
@@ -311,7 +432,16 @@ public struct AlcoholBrands {
             "Torres 10", "Torres 15", "Torres 20",
             "Metaxa 5*", "Metaxa 7*", "Metaxa 12*",
             "Cardenal Mendoza", "Calvados Dupont",
-            "Armagnac Darroze", "Pisco Portón"
+            "Armagnac Darroze", "Pisco Portón",
+            "Hennessy Black", "Hennessy Pure White", "Courvoisier L'Essence",
+            "Rémy Martin 1738", "Rémy Martin Tercet", "Martell Blue Swift", "Martell Cohiba",
+            "Martell L'Or de Jean Martell", "Camus Borderies XO", "Hine Triomphe",
+            "Frapin VSOP", "Frapin VIP XO", "Delamain Pale & Dry XO", "Delamain Vesper",
+            "Meukow VSOP", "Meukow XO", "Otard VSOP", "Otard XO", "Baron Otard",
+            "Château du Breuil Calvados", "Christian Drouin Calvados", "Boulard Calvados",
+            "Janneau VSOP Armagnac", "Janneau XO", "Chabot VSOP", "Chabot XO",
+            "Castarède Armagnac", "Pisco Barsol", "Macchu Pisco", "Grappa Nonino",
+            "Grappa Poli", "Grappa Sassicaia"
         ],
 
         // MARK: - Liqueurs
@@ -339,7 +469,21 @@ public struct AlcoholBrands {
             "Montenegro", "Ramazzotti", "Luxardo Maraschino",
             "Pimm's No.1", "St-Germain", "Lillet Blanc",
             "Suze", "Noilly Prat",
-            "Martini Bianco", "Martini Rosso", "Martini Extra Dry"
+            "Martini Bianco", "Martini Rosso", "Martini Extra Dry",
+            "Baileys Strawberries & Cream", "Baileys Salted Caramel", "Cointreau Noir",
+            "Grand Marnier Cordon Rouge", "Grand Marnier Cuvée Louis-Alexandre",
+            "Grand Marnier Centenaire", "Licor 43", "Solerno Blood Orange", "Glayva",
+            "Drambuie 15", "Jägermeister Manifest", "Jägermeister Cold Brew Coffee",
+            "Chartreuse V.E.P. Verte", "Chartreuse V.E.P. Jaune", "Genepi", "Izarra Verte",
+            "Izarra Jaune", "Menthe-Pastille Giffard", "Limoncello di Capri",
+            "Villa Massa Limoncello", "Sambuca Romana", "Galliano L'Autentico",
+            "Luxardo Amaretto", "Luxardo Limoncello", "Italicus Rosolio di Bergamotto",
+            "Martini Fiero", "Martini Riserva Speciale Rubino", "Martini Riserva Speciale Ambrato",
+            "Lillet Rosé", "Lillet Rouge Liqueur", "Dubonnet Rouge", "Carpano Punt e Mes",
+            "Noilly Prat Rouge", "Cocchi Americano", "Bonal Gentiane-Quina",
+            "Byrrh Grand Quinquina", "St-Germain Elderflower", "Marie Brizard Triple Sec",
+            "Bols Blue Curaçao", "Heering Cherry Liqueur", "Pisco Porton Liqueur",
+            "Passoã", "Safari Liqueur", "Pisang Ambon"
         ],
 
         // MARK: - Absinthes
@@ -352,7 +496,11 @@ public struct AlcoholBrands {
             "St. George Absinthe", "Lucid", "Kübler",
             "Mata Hari", "Mansinthe", "La Clandestine",
             "Butterfly", "Jade Nouvelle-Orléans", "Vieux Pontarlier",
-            "Henri Bardouin", "Francois Guy", "Duplais Verte"
+            "Henri Bardouin", "Francois Guy", "Duplais Verte",
+            "Obsello Absinthe", "Pacifique Absinthe", "Emperor Absinthe",
+            "Absinthe Ordinaire", "Roquette 1797", "L'Entêtante", "Absinthe Sauvage",
+            "La Muse Verte", "Artemisia Bugnon", "Duplais Blanche", "Un Emile 68",
+            "Vila de Valls", "Grande Absente 69"
         ],
 
         // MARK: - Aquavits
@@ -364,7 +512,11 @@ public struct AlcoholBrands {
             "Aalborg Jubilæums", "Aalborg Taffel", "Linie Aquavit",
             "O.P. Anderson", "Skåne Akvavit", "Brennevin",
             "Gammel Opland", "Gilde Non Plus Ultra", "Vikingfjord",
-            "Lysholm Linie", "Løiten Linie", "Nordic Aquavit"
+            "Lysholm Linie", "Løiten Linie", "Nordic Aquavit",
+            "Krogstad Festlig Aquavit", "Brennivín Rugbraud", "Aalborg Export",
+            "Linie Double Cask Port", "Linie Double Cask Madeira", "Lysholm No 52",
+            "Hven Organic Aquavit", "Løiten Export", "Simers Taffel",
+            "O.P. Anderson Petronella"
         ],
 
         // MARK: - Arracks
@@ -375,7 +527,10 @@ public struct AlcoholBrands {
             // Marques
             "Batavia Arrack Van Oosten", "Ceylon Arrack Old Reserve",
             "VSOA Arrack", "Arrak Punsch",
-            "Arak Brun", "Arak Blanc", "Arak Touma"
+            "Arak Brun", "Arak Blanc", "Arak Touma",
+            "Arak Razzouk", "Arak Ksara", "Arak Kefraya", "Arak Massaya",
+            "Arak El Massaya", "Arak Gantous & Abou Raad", "Arak Haddad",
+            "Arak Al-Zumurrud", "Arak Fakra"
         ],
 
         // MARK: - Bitters
@@ -391,7 +546,12 @@ public struct AlcoholBrands {
             "Scrappy's Lavender", "Bittercube Cherry Bark Vanilla",
             "Woodford Reserve Spiced Cherry",
             "Hella Citrus Bitters", "Dashfire Vintage Orange",
-            "Bittermens Xocolatl Mole", "Cynar Bitters"
+            "Bittermens Xocolatl Mole", "Cynar Bitters",
+            "Angostura Cocoa Bitters", "Angostura Orange Bitters", "Peychaud's Barrel Aged",
+            "Fee Brothers Plum", "Fee Brothers Peach", "Fee Brothers Black Walnut",
+            "The Bitter Truth Peach", "The Bitter Truth Celery", "Scrappy's Orange",
+            "Scrappy's Chocolate", "Bittermens Hopped Grapefruit", "Bittercube Bolivar",
+            "Bittercube Blackstrap", "Dashfire Sichuan Peppercorn", "El Guapo Love Potion #9"
         ],
 
         // MARK: - Cidres
@@ -411,7 +571,13 @@ public struct AlcoholBrands {
             "Aspall", "Westons Stowford Press",
             "Breton Loïc Raison", "Cidre de Normandie Dupont",
             "Eric Bordelet Argelette", "Kerné Brut",
-            "Guillevic Brut Nature"
+            "Guillevic Brut Nature",
+            "Angry Orchard Crisp Apple", "Woodchuck Amber", "Stella Artois Cidre",
+            "Crispin Original", "Westons Wyld Wood", "Thatchers Haze",
+            "Henry Westons Vintage", "Sheppy's Classic Draught", "Sandford Orchards Devon Red",
+            "Cidre Val de Rance Brut", "Cidre Val de Rance Doux", "Cidre Ecusson Brut",
+            "Cidre Ecusson Doux", "Sassy Cidre Brut", "Sassy Cidre Rosé", "Sassy Cidre Poire",
+            "Eric Bordelet Poire Granit", "Cidre Fermier de Haute-Normandie", "Cidre Christian Drouin"
         ],
 
         // MARK: - Hydromels
@@ -424,7 +590,11 @@ public struct AlcoholBrands {
             "Bochets du Monde", "Chouchen Breton",
             "Viking Blod", "Dansk Mjød",
             "B. Nektar", "Schramm's", "Moonlight Meadery",
-            "Redstone Meadery", "Rabbit's Foot Meadery"
+            "Redstone Meadery", "Rabbit's Foot Meadery",
+            "Superstition Meadery", "Garagiste Meadery", "Ken Schramm The Statement",
+            "Dansk Mjød Ribe Mjød", "Dansk Mjød Klapojster Mjød", "Viking Blod Hibiscus",
+            "Heidrun Meadery", "Maine Mead Works", "Apis Meadery", "Green Flash Mead",
+            "Chouchen Melmor", "Chouchen L'Hermine"
         ],
 
         // MARK: - Sakés
@@ -438,7 +608,12 @@ public struct AlcoholBrands {
             "Dassai 39", "Dassai 45", "Juyondai",
             "Isojiman", "Niizawa", "Born Gold",
             "Nanbu Bijin", "Kokuryu", "Kiku-Masamune", "Ozeki",
-            "Sho Chiku Bai", "Hana Awaka"
+            "Sho Chiku Bai", "Hana Awaka",
+            "Dassai Beyond", "Kubota Manju", "Kubota Senju", "Hakkaisan Tokubetsu Junmai",
+            "Hakkaisan Junmai Daiginjo", "Kenbishi", "Dewazakura Oka", "Soto Sake Junmai",
+            "Soto Sake Junmai Daiginjo", "Shichida", "Tedorigawa", "Masumi Okuden Kanzukuri",
+            "Suigei Tokubetsu Junmai", "Kikusui Funaguchi", "Rihaku Wandering Poet",
+            "Tozai Snow Maiden"
         ],
 
         // MARK: - Sojus
@@ -452,7 +627,12 @@ public struct AlcoholBrands {
             "Chum Churum", "Good Day",
             "Charm", "Hwayo 23", "Hwayo 41",
             "Andong Soju", "Munbaesoju",
-            "Tokki Soju"
+            "Tokki Soju",
+            "Jinro Chamisul Fresh", "Jinro Chamisul Classic", "Jinro Grapefruit",
+            "Jinro Green Grape", "Jinro Plum", "Jinro Strawberry", "Chum Churum Original",
+            "Chum Churum Peach", "Chum Churum Apple", "Saero Soju", "C1 Soju",
+            "Halla Mountain Soju (Hallasan)", "Tokki Soju Black Label", "West 32 Soju",
+            "Yobo Soju"
         ],
 
         // MARK: - Shōchūs
@@ -464,7 +644,10 @@ public struct AlcoholBrands {
             "Iichiko Silhouette", "Iichiko Frasco",
             "Kurokirishima", "Satsuma Shiranami",
             "Jinsei Sango", "Hakutake Shiro",
-            "Tantakatan", "Lento", "Hyakunen no Kodawari"
+            "Tantakatan", "Lento", "Hyakunen no Kodawari",
+            "Aka Kirishima", "Shiro Kirishima", "Mitoko Shochu", "Iichiko Saiten",
+            "Kakushura", "Towari Soba Shochu", "Kura no Shihou", "Amami Lento",
+            "Jikuya", "Kannoko"
         ],
 
         // MARK: - Baijius
@@ -477,7 +660,11 @@ public struct AlcoholBrands {
             "Luzhou Laojiao Tequ", "Gu Jing Gong",
             "Xifeng", "Fenjiu Laobaigan",
             "Jiannanchun", "Yanghe Blue Classic",
-            "Shui Jing Fang", "Lang Jiu"
+            "Shui Jing Fang", "Lang Jiu",
+            "Kweichow Moutai Prince", "Wuliangye 1618", "Yanghe Spirit Classic Dream Blue",
+            "Luzhou Laojiao National Cellar 1573", "Gu井贡酒 年份原浆", "Red Star Erguotou",
+            "Niulanshan Erguotou", "Jiang小白 (Jiangxiaobai)", "Tuopai Shede",
+            "Jiugui (Alcoholic Spirit)"
         ],
 
         // MARK: - Makgeollis
@@ -487,7 +674,10 @@ public struct AlcoholBrands {
             // Marques
             "Kook Soon Dang", "Seoul Jangsu", "Busan Makgeolli",
             "Nongmin Makgeolli", "Wolhyang",
-            "Ipeori", "Gapyeong Makgeolli"
+            "Ipeori", "Gapyeong Makgeolli",
+            "Kook Soon Dang Peach", "Kook Soon Dang Banana", "Kook Soon Dang White Grape",
+            "100 Billion Prebiotics Makgeolli", "Boksoondoga Hand-brewed Makgeolli",
+            "Song Myeong-seop Makgeolli", "Hareubang Mandarines Makgeolli"
         ],
 
         // MARK: - Hard Seltzers
@@ -503,7 +693,13 @@ public struct AlcoholBrands {
             "Vizzy Hard Seltzer", "Bud Light Seltzer",
             "Corona Hard Seltzer", "Smirnoff Seltzer",
             "Reign Total Body Fuel", "Natty Light Seltzer",
-            "Flying Embers Hard Seltzer"
+            "Flying Embers Hard Seltzer",
+            "White Claw Watermelon", "White Claw Natural Lime", "Truly Pineapple",
+            "Truly Strawberry Lemonade", "Topo Chico Strawberry Guava",
+            "Topo Chico Exotic Pineapple", "Nectar Hard Seltzer", "Snow Melt",
+            "High Noon Sun Sips Watermelon", "High Noon Sun Sips Grapefruit",
+            "High Noon Pineapple", "Long Drink Traditional", "Jose Cuervo Playamar",
+            "Mike's Hard Seltzer"
         ],
 
         // MARK: - Kombuchas alcoolisées
@@ -515,7 +711,12 @@ public struct AlcoholBrands {
             "JuneShine Hard Kombucha", "Unity Vibration", "Flying Embers",
             "Boochcraft", "Wild Tonic",
             "Kyla Hard Kombucha", "Sly Fox Hard Kombucha",
-            "Health-Ade Booch Hard Kombucha"
+            "Health-Ade Booch Hard Kombucha",
+            "JuneShine Blood Orange Mint", "JuneShine Midnight Painkiller",
+            "Flying Embers Grapefruit Thyme", "Flying Embers Pineapple Chili",
+            "Boochcraft Grapefruit Hibiscus", "Boochcraft Apple Jasmine",
+            "Wild Tonic Blueberry Basil", "Wild Tonic Raspberry Goji Rose",
+            "Nova Easy Kombucha"
         ],
 
         // MARK: - Sans alcool
@@ -535,7 +736,18 @@ public struct AlcoholBrands {
             "Lyre's American Malt", "Lyre's Dry London Spirit",
             "Monday Whiskey", "Monday Gin",
             "Ritual Zero Proof Whiskey Alternative",
-            "Borrago", "Everleaf Forest", "Everleaf Marine"
+            "Borrago", "Everleaf Forest", "Everleaf Marine",
+            "Ghia Non-Alcoholic Aperitif", "Tanqueray 0.0%", "Gordon's Alcohol Free 0.0%",
+            "G'Vine 0.0%", "Crodino", "Sanbitter", "Martini Vibrante", "Martini Floreale",
+            "Nona June Non-Alcoholic Gin", "Jnpr n°1", "Jnpr n°2", "French Bloom Le Blanc",
+            "French Bloom Le Rosé", "Noughty Alcohol-Free Sparkling Chardonnay",
+            "Natureo Red Wine Torres", "Natureo White Wine Torres",
+            "Le Petit Béret Virgin Chardonnay", "Le Petit Béret Virgin Cabernet",
+            "Athletic Brewing Free Wave Hazy IPA", "Brewdog Nanny State", "Guinness 0.0 Can",
+            "Lucky Saint", "Brooklyn Special Effects", "Clausthaler Dry Hopped",
+            "Seedlip Notas de Agave", "Lyre's Italian Spritz", "Lyre's Coffee Originale",
+            "Ritual Zero Proof Gin Alternative", "Ritual Zero Proof Tequila Alternative",
+            "Ritual Zero Proof Rum Alternative"
         ],
 
         // MARK: - Cocktails
@@ -558,7 +770,18 @@ public struct AlcoholBrands {
             "Penicillin", "Jungle Bird", "Naked & Famous",
             "Bee's Knees", "Aviation", "Corpse Reviver #2",
             "Bramble", "Singapore Sling", "Blue Lagoon",
-            "Amaretto Sour", "Lemon Drop", "Kir"
+            "Amaretto Sour", "Lemon Drop", "Kir",
+            "Boulevardier", "Sazerac", "Rusty Nail", "Godfather", "Irish Coffee",
+            "B52", "Kamikaze", "White Russian", "Black Russian", "Gin Fizz",
+            "Pisco Sour", "Paloma Mezcal", "Michelada", "Bloody Mary", "Mimosa",
+            "Aviation Cocktail", "Vesper Martini", "Dry Martini", "Dirty Martini",
+            "Gimlet Gin", "Gimlet Vodka", "Southside", "French Connection",
+            "Sidecar Brandy", "El Diablo", "Harvey Wallbanger", "Tequila Daisy",
+            "Painkiller", "Zombie", "Mai Tai", "Planter's Punch", "Hurricane",
+            "Ti' Punch", "Cuba Libre", "Caipirissima", "Caipiroska", "Moscow Mule Vodka",
+            "London Mule", "Kentucky Mule", "Mexican Mule", "Gin Gin Mule",
+            "Spritz Select", "Hugo Spritz", "Limoncello Spritz", "Campari Spritz",
+            "Americano", "Garibaldi", "Negroni Sbagliato"
         ]
     ]
 }
