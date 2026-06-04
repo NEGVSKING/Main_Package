@@ -9,6 +9,12 @@ import Foundation
 import EROKCore // Pour Address et BirthDate
 
 public struct EROKID: Codable, Identifiable {
+    public enum Genre: String, Codable, CaseIterable {
+        case homme = "Homme"
+        case femme = "Femme"
+        case nonPrecise = "Ne souhaite pas communiquer"
+    }
+
     public let id: String // UID Firebase Auth
     public let email: String
     public let firstName: String // Prénom
@@ -25,6 +31,7 @@ public struct EROKID: Codable, Identifiable {
     public let vipCodeHash: String?
     public let vipCodeSalt: String?
     public let biometricsEnabled: Bool
+    public let genre: Genre?
     
     // toDictionary pour écriture Firestore
     public func toDictionary() -> [String: Any] {
@@ -44,11 +51,12 @@ public struct EROKID: Codable, Identifiable {
         if let phoneNumber = phoneNumber { dict["phoneNumber"] = phoneNumber }
         if let vipCodeHash = vipCodeHash { dict["vipCodeHash"] = vipCodeHash }
         if let vipCodeSalt = vipCodeSalt { dict["vipCodeSalt"] = vipCodeSalt }
+        if let genre = genre { dict["genre"] = genre.rawValue }
         return dict
     }
     
     public enum CodingKeys: String, CodingKey {
-        case id, email, firstName, lastName, erokPseudo, birthDate, address, phoneNumber, phoneVerified, nfcKey, recentTransactions, vipCodeHash, vipCodeSalt, biometricsEnabled
+        case id, email, firstName, lastName, erokPseudo, birthDate, address, phoneNumber, phoneVerified, nfcKey, recentTransactions, vipCodeHash, vipCodeSalt, biometricsEnabled, genre
     }
     
     public init(
@@ -65,7 +73,8 @@ public struct EROKID: Codable, Identifiable {
         recentTransactions: [EROKTransaction] = [],
         vipCodeHash: String? = nil,
         vipCodeSalt: String? = nil,
-        biometricsEnabled: Bool = true
+        biometricsEnabled: Bool = true,
+        genre: Genre? = nil
     ) {
         guard !firstName.isEmpty, !lastName.isEmpty, !email.isEmpty else {
             fatalError("Prénom, nom et email obligatoires pour E-ROK ID")
@@ -84,6 +93,7 @@ public struct EROKID: Codable, Identifiable {
         self.vipCodeHash = vipCodeHash
         self.vipCodeSalt = vipCodeSalt
         self.biometricsEnabled = biometricsEnabled
+        self.genre = genre
     }
     
     // Init from dictionary (Firestore)
@@ -123,6 +133,9 @@ public struct EROKID: Codable, Identifiable {
         let vipCodeSalt = dictionary["vipCodeSalt"] as? String
         let biometricsEnabled = dictionary["biometricsEnabled"] as? Bool ?? true
         
+        let genreRaw = dictionary["genre"] as? String
+        let genre = genreRaw.flatMap { Genre(rawValue: $0) }
+        
         self.init(
             id: id,
             email: email,
@@ -137,7 +150,8 @@ public struct EROKID: Codable, Identifiable {
             recentTransactions: recentTransactions,
             vipCodeHash: vipCodeHash,
             vipCodeSalt: vipCodeSalt,
-            biometricsEnabled: biometricsEnabled
+            biometricsEnabled: biometricsEnabled,
+            genre: genre
         )
     }
     
@@ -158,6 +172,7 @@ public struct EROKID: Codable, Identifiable {
         vipCodeHash = try container.decodeIfPresent(String.self, forKey: .vipCodeHash)
         vipCodeSalt = try container.decodeIfPresent(String.self, forKey: .vipCodeSalt)
         biometricsEnabled = try container.decodeIfPresent(Bool.self, forKey: .biometricsEnabled) ?? true
+        genre = try container.decodeIfPresent(Genre.self, forKey: .genre)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -176,6 +191,7 @@ public struct EROKID: Codable, Identifiable {
         try container.encodeIfPresent(vipCodeHash, forKey: .vipCodeHash)
         try container.encodeIfPresent(vipCodeSalt, forKey: .vipCodeSalt)
         try container.encode(biometricsEnabled, forKey: .biometricsEnabled)
+        try container.encodeIfPresent(genre, forKey: .genre)
     }
     
     public var isAdult: Bool {
